@@ -7,14 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Balabolin;
 
 namespace Crestron_CIP_Test
 {
     public partial class Form1 : Form
     {
+        Balabolin.Crestron.CIPClient client;
+
+        void UpdateMainTextbox(string s)
+        {
+            if (richTextBox1.InvokeRequired)
+                richTextBox1.BeginInvoke(new Action<string>(UpdateMainTextbox), new object[] { s });
+            else
+                richTextBox1.AppendText(s + "\n");
+        }
+
+
+        void Crestron_Debug(object sender, StringEventArgs e)
+        {
+            UpdateMainTextbox(e.val);
+        }
         public Form1()
         {
             InitializeComponent();
+            client = new Balabolin.Crestron.CIPClient("127.0.0.1", 0x03);
+            client.Debug += new EventHandler<StringEventArgs>(Crestron_Debug);
         }
     }
 }
