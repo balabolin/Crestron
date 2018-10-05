@@ -42,14 +42,9 @@
   <ItemGroup>
     <Compile Include="Crestron CIP Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sockets\Async TCP Client.cs" />
     <Compile Include="Utils\Logging.cs" />
     <Compile Include="Utils\Stringhelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\jchristn\WatsonTcp\WatsonTcp\WatsonTcp.csproj">
-      <Project>{d5b0d163-0754-45ab-b143-cbb2c0e708b8}</Project>
-      <Name>WatsonTcp</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

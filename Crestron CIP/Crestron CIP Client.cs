@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Balabolin.Sockets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Balabolin.Crestron
 {
     public class CIPClient
     {
-        private WatsonTcp.WatsonTcpClient client;
+        private AsyncTcpClient client;
 
         const int PORT_CIP = 41794;
         private byte PID;
@@ -19,8 +20,23 @@ namespace Balabolin.Crestron
         {
             PID = bPID;
             IP = sIP;
-            client = new WatsonTcp.WatsonTcpClient(IP, PORT_CIP, ServerConnected,ServerDisconnected,OnReceive,false);
+            client = new AsyncTcpClient();
+            client.OnDataReceived += new EventHandler<byte[]>(OnReceive);
+            client.OnDisconnected += new EventHandler(ServerDisconnected);
             OnDebug(eDebugEventType.Info, "CIP Client created");
+        }
+
+        public async void ConnectToServer()
+        {
+            OnDebug(eDebugEventType.Info, "Try to connect");
+            try
+            {
+                await client.ConnectAsync(IP, PORT_CIP);
+            }
+            catch(Exception e)
+            {
+                OnDebug(eDebugEventType.Error, "Failed to connect ({0})", e.ToString());
+            }
         }
 
         private bool ServerConnected()
@@ -29,13 +45,12 @@ namespace Balabolin.Crestron
             return true;
         }
 
-        private bool ServerDisconnected()
+        public void ServerDisconnected(object sender, EventArgs e)
         {
-            OnDebug(eDebugEventType.Info, "Disconnected from server");
-            return true;
+            OnDebug(eDebugEventType.Info, "Disconnected from server");        
         }
 
-        bool OnReceive(byte[] baMessage)
+        private void OnReceive(object sender, byte[] baMessage)
         {
             if (baMessage.Length >= 3)
             {
@@ -44,7 +59,6 @@ namespace Balabolin.Crestron
                 string sPayload = Encoding.ASCII.GetString(baMessage, 3, baMessage.Length - 3);
                 ProcessCIPCommand(bCMD, iLen, sPayload);
             }
-            return true;
         }
 
         private void ProcessCIPCommand(byte bCMD, int iLen, string sPayload)
@@ -72,7 +86,8 @@ namespace Balabolin.Crestron
             OnDebug(eDebugEventType.Info, "Send response");
             bb[0] = PID;
             string sMsg = "\x01\x00\x07\x7F\x00\x00\x01\x00" + StringHelper.GetString(bb) + "\x40";
-            client.Send(Encoding.ASCII.GetBytes(sMsg);
+            client.SendAsync(Encoding.ASCII.GetBytes(sMsg));
+            //client.Send(Encoding.ASCII.GetBytes(sMsg);
         }
 
         public void OnDebug(eDebugEventType eventType, string str, params object[] list)

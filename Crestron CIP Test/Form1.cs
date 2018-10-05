@@ -31,8 +31,18 @@ namespace Crestron_CIP_Test
         public Form1()
         {
             InitializeComponent();
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
             client = new Balabolin.Crestron.CIPClient("127.0.0.1", 0x03);
             client.Debug += new EventHandler<StringEventArgs>(Crestron_Debug);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            client.ConnectToServer();
         }
     }
 }
