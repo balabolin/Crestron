@@ -128,12 +128,48 @@ namespace Balabolin.Crestron
 
         private void ProcessDataEvent(byte bDataType, string sPayload)
         {
-            OnDebug(eDebugEventType.Info, "Data event {0}", bDataType.ToString());
             switch (bDataType)
             {
                 case 0x00:
+                    // Digitall
+                    DigitalEvent(sPayload);
+                    break;
+                case 0x01:
+                    // Analog
+                    AnalogEvent(sPayload);
+                    break;
+                case 0x02:
+                    // Serial
+                    SerialEvent(sPayload);
+                    break;
+                case 0x38:
+                    // Smart graph
+                    break;
+                default:
+                    OnDebug(eDebugEventType.Info, "Unknown data event {0}", bDataType.ToString());
                     break;
             }
+        }
+
+        private void DigitalEvent(string sPayload)
+        {
+            byte[] baBody = Encoding.ASCII.GetBytes(sPayload);
+            ushort idx = (ushort)((baBody[5] & 0x7F) * 0x100 + baBody[4] + 1);
+            bool val = !StringHelper.GetBit(baBody[5], 7);
+            //int iJoinData = (baBody[4] << 8) + (baBody[5]);
+            //int iJoin = ((iJoinData >> 8) | ((iJoinData & 0x7F) << 8)) + 1;
+            //int iVal = iJoinData & 0x0080;
+            OnDebug(eDebugEventType.Info, "Digital event on join={0} to {1}", idx.ToString(), val.ToString());
+        }
+
+        private void AnalogEvent(string sPayload)
+        {
+
+        }
+
+        private void SerialEvent(string sPayload)
+        {
+
         }
 
         private void UnknownCMD(byte bCMD, int iLen, string sPayload)
