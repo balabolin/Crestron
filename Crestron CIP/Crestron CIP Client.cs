@@ -18,6 +18,7 @@ namespace Balabolin.Crestron
         private string IP;
         public event EventHandler<StringEventArgs> Debug;
 
+        #region Base methods
         public CIPClient(string sIP, byte bPID)
         {
             PID = bPID;
@@ -42,11 +43,20 @@ namespace Balabolin.Crestron
             }
         }
 
+        #endregion
+
+        #region Read/write methods
 
         private void Send(byte[] baData)
         {
             nstream.Write(baData, 0, baData.Length);
         }
+
+        private void Send(string sMsg)
+        {
+            Send(Encoding.ASCII.GetBytes(sMsg));
+        }
+
 
         async Task BeginRead()
         {
@@ -70,38 +80,115 @@ namespace Balabolin.Crestron
             return buf;
         }
 
-
-
-
-
+        #endregion
 
         private void ProcessCIPCommand(byte bCMD, int iLen, string sPayload)
         {
             switch (bCMD)
             {
-                case 0x0F:
+                case 0x02:
+                    if (iLen == 4)
                     {
-                        // Processor response
-                        if ((iLen == 1) & (sPayload == "\x02"))
-                        {
-                            SendReponse();
-                        };
+                        // IP ID registry Success
+                        RegisterSuccess();
+                    }
+                    break;
+           
+                case 0x05:
+                    // Data
+                    byte[] bbbb = Encoding.ASCII.GetBytes(sPayload);
+                    byte bDataType = bbbb[3];
+                    ProcessDataEvent(bDataType, sPayload);
+                    break;
+                case 0x0D:
+                    // Heartbeat timeout
+                    SendHeartBeat();
+                    break;
 
-                        break;
-                    };
+                case 0x0E:
+                    // Heartbeat received
+                    HeartbeatReceived();
+                    break;
 
+                case 0x0F:
+                    // Processor response
+                    if ((iLen == 1) & (sPayload == "\x02"))
+                    {
+                        SendConnectReponse();
+                    }
+                    else UnknownCMD(bCMD, iLen, sPayload);
+                    break;
+
+                default:
+                    UnknownCMD(bCMD, iLen, sPayload);
+                    break;
             }
 
         }
 
-        private void SendReponse()
+        private void ProcessDataEvent(byte bDataType, string sPayload)
+        {
+            OnDebug(eDebugEventType.Info, "Data event {0}", bDataType.ToString());
+            switch (bDataType)
+            {
+                case 0x00:
+                    break;
+            }
+        }
+
+        private void UnknownCMD(byte bCMD, int iLen, string sPayload)
+        {
+            OnDebug(eDebugEventType.Warn, "Unknown cmd: {0}, Payload ({1}): {2}", bCMD.ToString(),iLen.ToString(), sPayload);
+        }
+
+        private void RegisterSuccess()
+        {
+            OnDebug(eDebugEventType.Info, "Register success");
+            StartHeartBeatTimer();
+        }
+
+        private void HeartbeatReceived()
+        {
+            OnDebug(eDebugEventType.Info, "Ping ok");
+        }
+
+
+
+        private void SendConnectReponse()
         {
             byte[] bb = new byte[1];
             OnDebug(eDebugEventType.Info, "Send response");
             bb[0] = PID;
             string sMsg = "\x01\x00\x07\x7F\x00\x00\x01\x00" + StringHelper.GetString(bb) + "\x40";
-            Send(Encoding.ASCII.GetBytes(sMsg));
+            Send(sMsg);
         }
+
+        private void SendHeartBeat()
+        {
+            OnDebug(eDebugEventType.Info, "Send ping");
+            Send("\x0d\x00\x02\x00\x00");
+        }
+
+        #region Heartbeat timer
+
+        private void OnTHeartimer(Object stateInfo)
+        {
+            SendHeartBeat();
+        }
+
+        private System.Threading.Timer timer;
+        private System.Threading.AutoResetEvent timerEvent = new System.Threading.AutoResetEvent(false);
+        private void StartHeartBeatTimer()
+        {
+            timer = new System.Threading.Timer(OnTHeartimer, timerEvent, 0, 5000);
+        }
+        private void StopHeartBeatTimer()
+        {
+            timer.Dispose();
+        }
+
+        #endregion
+
 
         public void OnDebug(eDebugEventType eventType, string str, params object[] list)
         {
