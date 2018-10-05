@@ -1,15 +1,17 @@
-﻿using Balabolin.Sockets;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace Balabolin.Crestron
 {
     public class CIPClient
     {
-        private AsyncTcpClient client;
+        private TcpClient client;
+        private NetworkStream nstream;
 
         const int PORT_CIP = 41794;
         private byte PID;
@@ -20,18 +22,19 @@ namespace Balabolin.Crestron
         {
             PID = bPID;
             IP = sIP;
-            client = new AsyncTcpClient();
-            client.OnDataReceived += new EventHandler<byte[]>(OnReceive);
-            client.OnDisconnected += new EventHandler(ServerDisconnected);
-            OnDebug(eDebugEventType.Info, "CIP Client created");
+            client = new TcpClient();
         }
+
 
         public async void ConnectToServer()
         {
-            OnDebug(eDebugEventType.Info, "Try to connect");
+            OnDebug(eDebugEventType.Info, "Try to connect...");
             try
             {
                 await client.ConnectAsync(IP, PORT_CIP);
+                nstream = client.GetStream();
+                Task ts = Task.Run(BeginRead);
+                OnDebug(eDebugEventType.Info, "connect succesfull");
             }
             catch(Exception e)
             {
@@ -39,27 +42,38 @@ namespace Balabolin.Crestron
             }
         }
 
-        private bool ServerConnected()
+
+        private void Send(byte[] baData)
         {
-            OnDebug(eDebugEventType.Info, "Connected to server {1}:{2}", IP,PID.ToString());
-            return true;
+            nstream.Write(baData, 0, baData.Length);
         }
 
-        public void ServerDisconnected(object sender, EventArgs e)
+        async Task BeginRead()
         {
-            OnDebug(eDebugEventType.Info, "Disconnected from server");        
-        }
-
-        private void OnReceive(object sender, byte[] baMessage)
-        {
-            if (baMessage.Length >= 3)
+            while (true)
             {
-                byte bCMD = baMessage[0];
-                int iLen = (baMessage[1] << 8) + baMessage[2];
-                string sPayload = Encoding.ASCII.GetString(baMessage, 3, baMessage.Length - 3);
+                byte[] baBuf = await ReadFromStreamAsync(nstream, 3);
+                byte bCMD = baBuf[0];
+                int iLen = (baBuf[1] << 8) + baBuf[2];
+                byte[] baPayload = await ReadFromStreamAsync(nstream, iLen);
+                string sPayload = Encoding.ASCII.GetString(baPayload);
                 ProcessCIPCommand(bCMD, iLen, sPayload);
             }
         }
+
+        async Task<byte[]> ReadFromStreamAsync(NetworkStream s, int nbytes)
+        {
+            var buf = new byte[nbytes];
+            var readpos = 0;
+            while (readpos < nbytes)
+                readpos += await s.ReadAsync(buf, readpos, nbytes - readpos);
+            return buf;
+        }
+
+
+
+
+
 
         private void ProcessCIPCommand(byte bCMD, int iLen, string sPayload)
         {
@@ -86,8 +100,7 @@ namespace Balabolin.Crestron
             OnDebug(eDebugEventType.Info, "Send response");
             bb[0] = PID;
             string sMsg = "\x01\x00\x07\x7F\x00\x00\x01\x00" + StringHelper.GetString(bb) + "\x40";
-            client.SendAsync(Encoding.ASCII.GetBytes(sMsg));
-            //client.Send(Encoding.ASCII.GetBytes(sMsg);
+            Send(Encoding.ASCII.GetBytes(sMsg));
         }
 
         public void OnDebug(eDebugEventType eventType, string str, params object[] list)
