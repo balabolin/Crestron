@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron CIP", "Crestron CIP\Crestron CIP.csproj", "{069CDB41-C387-4EF0-AE8A-828559FA6CEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatsonTcp", "..\..\jchristn\WatsonTcp\WatsonTcp\WatsonTcp.csproj", "{D5B0D163-0754-45AB-B143-CBB2C0E708B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron CIP Test", "Crestron CIP Test\Crestron CIP Test.csproj", "{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{069CDB41-C387-4EF0-AE8A-828559FA6CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{069CDB41-C387-4EF0-AE8A-828559FA6CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{069CDB41-C387-4EF0-AE8A-828559FA6CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5B0D163-0754-45AB-B143-CBB2C0E708B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B0D163-0754-45AB-B143-CBB2C0E708B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B0D163-0754-45AB-B143-CBB2C0E708B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B0D163-0754-45AB-B143-CBB2C0E708B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
