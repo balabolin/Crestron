@@ -36,7 +36,7 @@ namespace Crestron_CIP_Test
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            client = new Balabolin.Crestron.CIPClient("127.0.0.1", 0x03);
+            client = new Balabolin.Crestron.CIPClient("192.168.100.100", 0x12);
             client.Debug += new EventHandler<StringEventArgs>(Crestron_Debug);
         }
 

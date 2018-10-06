@@ -90,14 +90,14 @@ namespace Balabolin
             if (str == null)
                 return new byte[0];
             else
-                return Encoding.GetEncoding("ISO-8859-1").GetBytes(str);
+                return Encoding.GetEncoding("windows-1251").GetBytes(str);
         }
         public static string GetString(byte[] bytes)
         {
             if (bytes == null) 
                 return String.Empty;
             else
-                return Encoding.GetEncoding("ISO-8859-1").GetString(bytes, 0, bytes.Length);
+                return Encoding.GetEncoding("windows-1251").GetString(bytes, 0, bytes.Length);
         }
         //public static byte[] GetBytes(string str) // because no encodings work the way we need
         //{
