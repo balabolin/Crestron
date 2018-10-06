@@ -36,13 +36,15 @@ namespace Crestron_CIP_Test
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            client = new Balabolin.Crestron.CIPClient("192.168.100.100", 0x12);
+            //client = new Balabolin.Crestron.CIPClient("192.168.100.100", 0x12);
+            client = new Balabolin.Crestron.CIPClient("127.0.0.1", 0x12);
             client.Debug += new EventHandler<StringEventArgs>(Crestron_Debug);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             client.ConnectToServer();
+            if (!client.Connected) UpdateMainTextbox("Failed to connect!");
         }
 
         private void button2_Click(object sender, EventArgs e)

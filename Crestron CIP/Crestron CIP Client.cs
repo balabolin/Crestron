@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Balabolin.Crestron
 {
@@ -51,6 +52,9 @@ namespace Balabolin.Crestron
             }
         }
 
+        private Cancellation​Token​Source tokenSource = new CancellationTokenSource();
+        private CancellationToken cancelToken;
+
         public async void ConnectToServer()
         {
             OnDebug(eDebugEventType.Info, "Try to connect...");
@@ -59,24 +63,28 @@ namespace Balabolin.Crestron
                 client = new TcpClient();
                 await client.ConnectAsync(IP, PORT_CIP);
                 nstream = client.GetStream();
-                ts = Task.Run(BeginRead);                
+                cancelToken = tokenSource.Token;
+                ts = Task.Run(BeginRead,cancelToken);                
                 OnDebug(eDebugEventType.Info, "connect succesfull");
             }
             catch(Exception e)
             {
-                nstream?.Dispose();
-                ts?.Dispose();
-                client?.Close();
+                FreeResources();
                 OnDebug(eDebugEventType.Error, "Failed to connect ({0})", e.ToString());
             }
         }
-
-        private void DisconnectFromServer()
+        private void FreeResources()
         {
             StopHeartBeatTimer();
-            ts?.Dispose();
+            tokenSource.Cancel();
+            //ts?.Dispose();
             nstream?.Dispose();
             client?.Close();
+        }
+        private void DisconnectFromServer()
+        {
+            FreeResources();
+            OnDebug(eDebugEventType.Warn, "Disconnected from server");
             OnDisconnect?.Invoke();
         }
 
@@ -133,7 +141,7 @@ namespace Balabolin.Crestron
             }
             catch (Exception e)
             {
-                OnDebug(eDebugEventType.Error, e.ToString());
+                OnDebug(eDebugEventType.Error, "Send error {0}", e.ToString());
                 DisconnectFromServer();
             }
         }
@@ -148,8 +156,6 @@ namespace Balabolin.Crestron
         {
             try
             {
-
-
                 while (true)
                 {
                     byte[] baBuf = await ReadFromStreamAsync(nstream, 3);
@@ -162,7 +168,7 @@ namespace Balabolin.Crestron
             }
             catch (Exception e)
             {
-                OnDebug(eDebugEventType.Info, e.ToString());
+                OnDebug(eDebugEventType.Info,"Begin read error: {0}", e.ToString());
                 DisconnectFromServer();
             }
         }
@@ -179,7 +185,7 @@ namespace Balabolin.Crestron
             }
             catch (Exception e)
             {
-                OnDebug(eDebugEventType.Info, e.ToString());
+                OnDebug(eDebugEventType.Info, "ReadFromStreamAsync error: {0}", e.ToString());
                 DisconnectFromServer();
                 return null;
             }
