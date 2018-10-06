@@ -44,5 +44,35 @@ namespace Crestron_CIP_Test
         {
             client.ConnectToServer();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            client.UpdateRequest();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            client.SendAnalogue(1, (ushort)numericUpDown1.Value);
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            client.SendDigital(1, false);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            client.SendDigital(1, true);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            client.SendSerial(2, textBox1.Text);
+        }
     }
 }

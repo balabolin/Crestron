@@ -21,6 +21,16 @@ namespace Balabolin.Crestron
         #endregion
 
         #region Events
+        public delegate void BasicHandler();
+        public delegate void DigitalEventHandler(ushort usJoin, bool bValue);
+        public delegate void AnalogueEventHandler(ushort usJoin, ushort usValue);
+        public delegate void SerialEventHandler(ushort usJoin, string sValue);
+
+        public event BasicHandler OnDisconnect;
+        public event DigitalEventHandler OnDigital;
+        public event AnalogueEventHandler OnAnalogue;
+        public event SerialEventHandler OnSerial;
+
         public event EventHandler<StringEventArgs> Debug;
         #endregion
 
@@ -29,38 +39,103 @@ namespace Balabolin.Crestron
         {
             PID = bPID;
             IP = sIP;
-            client = new TcpClient();
         }
 
+        private Task ts = null;
+
+        public bool Connected
+        {
+            get
+            {
+                return (client == null) ? false : client.Connected; 
+            }
+        }
 
         public async void ConnectToServer()
         {
             OnDebug(eDebugEventType.Info, "Try to connect...");
             try
             {
+                client = new TcpClient();
                 await client.ConnectAsync(IP, PORT_CIP);
                 nstream = client.GetStream();
-                Task ts = Task.Run(BeginRead);
+                ts = Task.Run(BeginRead);                
                 OnDebug(eDebugEventType.Info, "connect succesfull");
             }
             catch(Exception e)
             {
+                nstream?.Dispose();
+                ts?.Dispose();
+                client?.Close();
                 OnDebug(eDebugEventType.Error, "Failed to connect ({0})", e.ToString());
             }
         }
 
         private void DisconnectFromServer()
         {
-
+            StopHeartBeatTimer();
+            ts?.Dispose();
+            nstream?.Dispose();
+            client?.Close();
+            OnDisconnect?.Invoke();
         }
 
+        #endregion
+
+        #region Transmit joins
+        public void UpdateRequest()
+        {
+            Send("\x05\x00\x05\x00\x00\x02\x03\00");
+        }
+
+
+        public void SendDigital(ushort usJoin,bool bVal)
+        {
+            ushort NewIdx = (ushort)StringHelper.SetBit(usJoin - 1, 15, !bVal);
+            byte[] b = { (byte)(NewIdx % 0x100), (byte)(NewIdx / 0x100) };
+            string str = "\x05\x00\x06\x00\x00\x03\x00" + StringHelper.GetString(b);
+            Send(str);
+        }
+
+        public void SendAnalogue(ushort usJoin, ushort val)
+        {
+            byte idxLowByte = (byte)((usJoin - 1) % 0x100);
+            byte idxHighByte = (byte)((usJoin - 1) / 0x100);
+            byte LevelLowByte = (byte)(val % 0x100);
+            byte LevelHighByte = (byte)(val / 0x100);
+            byte[] b = { idxHighByte, idxLowByte, LevelHighByte, LevelLowByte };
+            string s = StringHelper.GetString(b);
+            string str = "\x05\x00\x08\x00\x00\x05\x14" + s;
+            Send(str);
+        }
+
+        public void SendSerial(ushort usJoin,string sVal)
+        {
+            ushort NewIdx = (ushort)(usJoin - 1);
+            byte[] baPart = { (byte)(sVal.Length+2), 0x12, (byte)NewIdx };
+
+            string sPayload = "\x00\x00" + StringHelper.GetString(baPart) + sVal;
+
+            byte[] baLen = { (byte)(sPayload.Length) };
+            string str = "\x05\x00" + StringHelper.GetString(baLen)+sPayload;
+
+            Send(str);
+        }
         #endregion
 
         #region Read/write methods
 
         private void Send(byte[] baData)
         {
-            nstream.Write(baData, 0, baData.Length);
+            try
+            {
+                nstream.Write(baData, 0, baData.Length);
+            }
+            catch (Exception e)
+            {
+                OnDebug(eDebugEventType.Error, e.ToString());
+                DisconnectFromServer();
+            }
         }
 
         private void Send(string sMsg)
@@ -88,16 +163,26 @@ namespace Balabolin.Crestron
             catch (Exception e)
             {
                 OnDebug(eDebugEventType.Info, e.ToString());
+                DisconnectFromServer();
             }
         }
 
         async Task<byte[]> ReadFromStreamAsync(NetworkStream s, int nbytes)
         {
-            var buf = new byte[nbytes];
-            var readpos = 0;
-            while (readpos < nbytes)
-                readpos += await s.ReadAsync(buf, readpos, nbytes - readpos);
-            return buf;
+            try
+            {
+                var buf = new byte[nbytes];
+                var readpos = 0;
+                while (readpos < nbytes)
+                    readpos += await s.ReadAsync(buf, readpos, nbytes - readpos);
+                return buf;
+            }
+            catch (Exception e)
+            {
+                OnDebug(eDebugEventType.Info, e.ToString());
+                DisconnectFromServer();
+                return null;
+            }
         }
 
         #endregion
@@ -215,6 +300,7 @@ namespace Balabolin.Crestron
             ushort idx = (ushort)((baPayload[5] & 0x7F) * 0x100 + baPayload[4] + 1);
             bool val = !StringHelper.GetBit(baPayload[5], 7);
             OnDebug(eDebugEventType.Info, "Digital event on join={0}  to {1}", idx.ToString(), val.ToString());
+            OnDigital?.Invoke(idx, val);
         }
 
         private void AnalogEvent(byte[] baPayload)
@@ -222,6 +308,7 @@ namespace Balabolin.Crestron
             byte bType = baPayload[2];
             ushort idx = 0;
             ushort val = 0;
+            bool bReceived = true;
             switch (bType)
             {
                 case 4:
@@ -233,9 +320,11 @@ namespace Balabolin.Crestron
                     val = (ushort)(baPayload[6] * 0x100 + baPayload[7]);
                     break;
                 default:
+                    bReceived = false;
                     OnDebug(eDebugEventType.Info, "Unknown analogue data type {0}", bType.ToString());
                     break;
             }
+            if (bReceived) OnAnalogue?.Invoke(idx, val);
             OnDebug(eDebugEventType.Info, "Analog event on join={0}  to {1}", idx.ToString(), val.ToString());
         }
 
@@ -250,6 +339,7 @@ namespace Balabolin.Crestron
             ushort iStartV = (ushort)(iEndIndex + (iEndIndex - iStartIndex) + 3); //11
             ushort ilen = (ushort)(baPayload.Length-iStartV-1);   //1
             string val = sPayload.Substring(iStartV,ilen);
+            OnSerial?.Invoke(idx, val);
             OnDebug(eDebugEventType.Info, "Serial event on join={0}  to {1}", idx.ToString(), val.ToString());
         }
 
@@ -270,7 +360,7 @@ namespace Balabolin.Crestron
         }
         private void StopHeartBeatTimer()
         {
-            timer.Dispose();
+            timer?.Dispose();
         }
 
         #endregion
@@ -278,8 +368,7 @@ namespace Balabolin.Crestron
         #region Debug
         public void OnDebug(eDebugEventType eventType, string str, params object[] list)
         {
-            if (Debug != null)
-                Debug(this, new StringEventArgs(String.Format(str, list)));
+            Debug?.Invoke(this, new StringEventArgs(String.Format(str, list)));
             //parent.Invoke(parent.Debug, new Object[] { str });
         }
         #endregion
