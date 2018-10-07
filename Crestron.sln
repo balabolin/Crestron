@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron CIP", "Crestron CIP\Crestron CIP.csproj", "{069CDB41-C387-4EF0-AE8A-828559FA6CEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron CIP Test", "Crestron CIP Test\Crestron CIP Test.csproj", "{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron Gate", "Crestron Gate\Crestron Gate.csproj", "{2EA65345-970A-4307-8CA9-237FC714D156}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EA65345-970A-4307-8CA9-237FC714D156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EA65345-970A-4307-8CA9-237FC714D156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EA65345-970A-4307-8CA9-237FC714D156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EA65345-970A-4307-8CA9-237FC714D156}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
