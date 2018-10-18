@@ -27,6 +27,7 @@ namespace Balabolin.Crestron
         public delegate void AnalogueEventHandler(ushort usJoin, ushort usValue);
         public delegate void SerialEventHandler(ushort usJoin, string sValue);
 
+        public event BasicHandler OnСonnect;
         public event BasicHandler OnDisconnect;
         public event DigitalEventHandler OnDigital;
         public event AnalogueEventHandler OnAnalogue;
@@ -66,6 +67,7 @@ namespace Balabolin.Crestron
                 cancelToken = tokenSource.Token;
                 ts = Task.Run(BeginRead,cancelToken);                
                 OnDebug(eDebugEventType.Info, "connect succesfull");
+                OnСonnect?.Invoke();
             }
             catch(Exception e)
             {

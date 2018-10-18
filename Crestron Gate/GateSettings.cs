@@ -34,6 +34,16 @@ namespace Crestron_Gate
             set { this["CrestronPID"] = value; }
         }
 
-
+        [Browsable(true)]
+        [Description("IP адрес MQTT брокера")]
+        [DisplayName("MQTT broker IP")]
+        [Category("MQTT")]
+        [UserScopedSettingAttribute()]
+        [DefaultSettingValueAttribute("192.168.100.10")]
+        public string MQTT_IP
+        {
+            get { return (String)this["MQTT_IP"]; }
+            set { this["MQTT_IP"] = value; }
+        }
     }
 }
