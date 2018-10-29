@@ -51,7 +51,7 @@ namespace Crestron_Gate
                     Digitals = (List<JoinToMQTT>)formatter.Deserialize(fs);
                 }
             }
-            catch (Exception ee)
+            catch 
             {
                 Digitals = new List<JoinToMQTT>();
             }

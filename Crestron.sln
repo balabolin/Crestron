@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron CIP", "Crestron CIP\Crestron CIP.csproj", "{069CDB41-C387-4EF0-AE8A-828559FA6CEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron CIP Test", "Crestron CIP Test\Crestron CIP Test.csproj", "{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron Gate", "Crestron Gate\Crestron Gate.csproj", "{2EA65345-970A-4307-8CA9-237FC714D156}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron MQTT Gate", "Crestron Gate\Crestron MQTT Gate.csproj", "{2EA65345-970A-4307-8CA9-237FC714D156}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crestron power gate", "Crestron power gate\Crestron power gate.csproj", "{36A98DC0-E4EB-4123-8AFD-21D48F73C09D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balabolin.Crestron.Gates.Broadlink", "Crestron to Broadlink gate\Balabolin.Crestron.Gates.Broadlink.csproj", "{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gates", "Gates", "{512732D6-2876-4BEF-91DA-81659A99340B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Crestron CIP projects", "Crestron CIP projects", "{7824ACFE-B9F2-44B3-9022-69042161F9B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +35,26 @@ Global
 		{2EA65345-970A-4307-8CA9-237FC714D156}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EA65345-970A-4307-8CA9-237FC714D156}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EA65345-970A-4307-8CA9-237FC714D156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36A98DC0-E4EB-4123-8AFD-21D48F73C09D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36A98DC0-E4EB-4123-8AFD-21D48F73C09D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36A98DC0-E4EB-4123-8AFD-21D48F73C09D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36A98DC0-E4EB-4123-8AFD-21D48F73C09D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{069CDB41-C387-4EF0-AE8A-828559FA6CEC} = {7824ACFE-B9F2-44B3-9022-69042161F9B7}
+		{1EA90C11-2C4A-4F17-80D5-5C52AC46BD4C} = {7824ACFE-B9F2-44B3-9022-69042161F9B7}
+		{2EA65345-970A-4307-8CA9-237FC714D156} = {512732D6-2876-4BEF-91DA-81659A99340B}
+		{36A98DC0-E4EB-4123-8AFD-21D48F73C09D} = {512732D6-2876-4BEF-91DA-81659A99340B}
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA} = {512732D6-2876-4BEF-91DA-81659A99340B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB3436AA-0AC8-4AED-841C-80F0593056E2}
 	EndGlobalSection
 EndGlobal

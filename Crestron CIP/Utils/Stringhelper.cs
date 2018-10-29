@@ -30,7 +30,7 @@
 using System.Drawing;
 
 
-namespace Balabolin
+namespace Balabolin.Utils
 {
     using System;
     using System.Text;
@@ -117,10 +117,10 @@ namespace Balabolin
         //    }
         //    return bytes;
         //}
-        public static string CreateBytesFromHexString(string str)
+        public static byte[] CreateBytesFromHexString(string str)
         {
-            if (str == null)
-                return String.Empty;
+            if (str == null) 
+                return null;
             String p1 = @"(\\[xX][0-9a-fA-F]{2}|.)";
             Regex r1 = new Regex(p1);
             MatchCollection m = r1.Matches(str);
@@ -141,7 +141,7 @@ namespace Balabolin
                 }
             }
             byte[] b = GetBytes(s1);
-            return s1;
+            return b;
         }
         public static bool GetBit(byte b, byte bitNumber)
         {

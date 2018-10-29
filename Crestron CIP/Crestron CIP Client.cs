@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Balabolin.Utils;
 
 namespace Balabolin.Crestron
 {
