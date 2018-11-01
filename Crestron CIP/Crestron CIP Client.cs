@@ -11,6 +11,11 @@ using Balabolin.Utils;
 
 namespace Balabolin.Crestron
 {
+    public delegate void BasicHandler();
+    public delegate void DigitalEventHandler(ushort usJoin, bool bValue);
+    public delegate void AnalogueEventHandler(ushort usJoin, ushort usValue);
+    public delegate void SerialEventHandler(ushort usJoin, string sValue);
+    
     public class CIPClient
     {
         #region Declarations
@@ -23,10 +28,6 @@ namespace Balabolin.Crestron
         #endregion
 
         #region Events
-        public delegate void BasicHandler();
-        public delegate void DigitalEventHandler(ushort usJoin, bool bValue);
-        public delegate void AnalogueEventHandler(ushort usJoin, ushort usValue);
-        public delegate void SerialEventHandler(ushort usJoin, string sValue);
 
         public event BasicHandler OnСonnect;
         public event BasicHandler OnDisconnect;
