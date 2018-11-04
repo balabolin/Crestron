@@ -35,11 +35,13 @@ namespace Balabolin.Crestron.Gate.Plugins.MQTT
             }
         }
 
-        public List<JoinDescription> Digitals => throw new NotImplementedException();
+        public List<string> InDigitals { get; }
+        public List<string> InAnalogs { get; }
+        public List<string> InSerials { get; }
 
-        public List<JoinDescription> Analogs => throw new NotImplementedException();
-
-        public List<JoinDescription> Serials => throw new NotImplementedException();
+        public List<string> OutDigitals { get; }
+        public List<string> OutAnalogs { get; }
+        public List<string> OutSerials { get; }
 
         public event DigitalEventHandler OnDigital;
         public event AnalogueEventHandler OnAnalog;
@@ -64,6 +66,15 @@ namespace Balabolin.Crestron.Gate.Plugins.MQTT
         public void ShowMainWindow()
         {
             throw new NotImplementedException();
+        }
+        public void Start()
+        {
+
+        }
+
+        public void Stop()
+        {
+
         }
     }
 

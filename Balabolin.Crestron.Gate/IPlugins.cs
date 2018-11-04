@@ -9,26 +9,24 @@ using Balabolin.Utils;
 
 namespace Balabolin.Crestron.Gate.Plugins
 {
-    public class JoinDescription
-    {
-        public string InputName { get; set; }
-        public string OutputName { get; set; }
-    }
-
-
-
     public interface IPlugin
     {
         string Name { get; }
         string Version { get; }
         Bitmap Logo { get; }
-        List<JoinDescription> Digitals { get; }
-        List<JoinDescription> Analogs { get; }
-        List<JoinDescription> Serials { get; }
+        List<string> InDigitals { get; }
+        List<string> InAnalogs { get; }
+        List<string> InSerials { get; }
+
+        List<string> OutDigitals { get; }
+        List<string> OutAnalogs { get; }
+        List<string> OutSerials { get; }
 
         event DigitalEventHandler OnDigital;
         event AnalogueEventHandler OnAnalog;
         event SerialEventHandler OnSerial;
+
+        event EventHandler<StringEventArgs> OnDebug;
 
         void ShowMainWindow();
 
@@ -36,6 +34,7 @@ namespace Balabolin.Crestron.Gate.Plugins
         void ProcessAnaloglEvent(int iJoin, int Data);
         void ProcessSerialEvent(int iJoin, string Data);
 
-        event EventHandler<StringEventArgs> OnDebug;
+        void Start();
+        void Stop();
     }
 }

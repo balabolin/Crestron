@@ -15,7 +15,7 @@ namespace Balabolin.Crestron
     public delegate void DigitalEventHandler(ushort usJoin, bool bValue);
     public delegate void AnalogueEventHandler(ushort usJoin, ushort usValue);
     public delegate void SerialEventHandler(ushort usJoin, string sValue);
-    
+
     public class CIPClient
     {
         #region Declarations
@@ -39,10 +39,8 @@ namespace Balabolin.Crestron
         #endregion
 
         #region Base methods
-        public CIPClient(string sIP, byte bPID)
+        public CIPClient()
         {
-            PID = bPID;
-            IP = sIP;
         }
 
         private Task ts = null;
@@ -58,8 +56,10 @@ namespace Balabolin.Crestron
         private Cancellation​Token​Source tokenSource = new CancellationTokenSource();
         private CancellationToken cancelToken;
 
-        public async void ConnectToServer()
+        public async void ConnectToServer(string sIP, byte bPID)
         {
+            PID = bPID;
+            IP = sIP;
             OnDebug(eDebugEventType.Info, "Try to connect...");
             try
             {
@@ -85,7 +85,7 @@ namespace Balabolin.Crestron
             nstream?.Dispose();
             client?.Close();
         }
-        private void DisconnectFromServer()
+        public void DisconnectFromServer()
         {
             FreeResources();
             OnDebug(eDebugEventType.Warn, "Disconnected from server");
