@@ -101,7 +101,8 @@ namespace Balabolin.Crestron.Gate.Plugins
             OmPluginDebugEvent?.Invoke(this, pli.ToLongLogString());
         }
 
-        public void OnDigitalEventHandler(ushort usJoin, bool bValue)
+        #region Crestron event handlers
+        public void OnCrestronDigitalEventHandler(ushort usJoin, bool bValue)
         {
             if (usJoin <= InDigitals.Count)
             {
@@ -113,7 +114,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
         }
 
-        public void OnAnalogEventHandler(ushort usJoin, ushort usValue)
+        public void OnCrestronAnalogEventHandler(ushort usJoin, ushort usValue)
         {
             if (usJoin <= InAnalogs.Count)
             {
@@ -125,7 +126,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
         }
 
-        public void OnSerialEventHandler(ushort usJoin, string sValue)
+        public void OnCrestronSerialEventHandler(ushort usJoin, string sValue)
         {
             if (usJoin <= InSerials.Count)
             {
@@ -136,7 +137,45 @@ namespace Balabolin.Crestron.Gate.Plugins
                 WriteToLog(LogItemType.Internal, String.Format("Invalid serial join ({0}) received", usJoin.ToString()));
             }
         }
+        #endregion
+        #endregion
 
+        #region Crestron event handlers
+        public void OnPluginDigitalEventHandler(ushort usJoin, bool bValue)
+        {
+            if (usJoin <= InDigitals.Count)
+            {
+                OutDigitals[usJoin - 1].SystemSetData(bValue);
+            }
+            else
+            {
+                WriteToLog(LogItemType.Internal, String.Format("Undefined digital join ({0}) send", usJoin.ToString()));
+            }
+        }
+
+        public void OnPluginAnalogEventHandler(ushort usJoin, ushort usValue)
+        {
+            if (usJoin <= InAnalogs.Count)
+            {
+                OutAnalogs[usJoin - 1].SystemSetData(usValue);
+            }
+            else
+            {
+                WriteToLog(LogItemType.Internal, String.Format("Undefined analog join ({0}) send", usJoin.ToString()));
+            }
+        }
+
+        public void OnPluginSerialEventHandler(ushort usJoin, string sValue)
+        {
+            if (usJoin <= InSerials.Count)
+            {
+                OutSerials[usJoin - 1].SystemSetData(sValue);
+            }
+            else
+            {
+                WriteToLog(LogItemType.Internal, String.Format("Undefined serial join ({0}) send", usJoin.ToString()));
+            }
+        }
         #endregion
 
         #region Load/unload functions
@@ -245,6 +284,9 @@ namespace Balabolin.Crestron.Gate.Plugins
                         {
                             _plugin = (IPlugin)pluginAss.CreateInstance(type.FullName);
                             _plugin.OnDebugEvent += OnDebug;
+                            _plugin.OnAnalog += OnPluginAnalogEventHandler;
+                            _plugin.OnDigital += OnPluginDigitalEventHandler;
+                            _plugin.OnSerial += OnPluginSerialEventHandler;
                             _AssemblyDateTime = File.GetLastWriteTime(AssemblyFileName);
                             LoadDefinitions();
                             _plugin.Start();
@@ -336,9 +378,9 @@ namespace Balabolin.Crestron.Gate.Plugins
             Crestron = new CIPClient();
             Crestron.OnСonnect += OnCrestronConnect;
             Crestron.OnDisconnect += OnCrestronDisonnect;
-            Crestron.OnDigital += OnDigitalEventHandler;
-            Crestron.OnAnalogue += OnAnalogEventHandler;
-            Crestron.OnSerial += OnSerialEventHandler;
+            Crestron.OnDigital += OnCrestronDigitalEventHandler;
+            Crestron.OnAnalogue += OnCrestronAnalogEventHandler;
+            Crestron.OnSerial += OnCrestronSerialEventHandler;
             Crestron.Debug += OnDebug;
             //Debu
         }

@@ -40,6 +40,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.buttonDig_Sw = new System.Windows.Forms.Button();
+            this.buttonPulse_Off = new System.Windows.Forms.Button();
+            this.buttonPulse_On = new System.Windows.Forms.Button();
+            this.buttonTO_OFF = new System.Windows.Forms.Button();
+            this.buttonTO_ON = new System.Windows.Forms.Button();
+            this.pictureBoxDigitlSignal = new System.Windows.Forms.PictureBox();
             this.labelSignalDirection_D = new System.Windows.Forms.Label();
             this.labelSignalName_D = new System.Windows.Forms.Label();
             this.richTextBoxDigitalLog = new System.Windows.Forms.RichTextBox();
@@ -48,6 +54,7 @@
             this.columnHeaderDIName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDIData = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonAnalogSend = new System.Windows.Forms.Button();
             this.numericUpDownAnalogData = new System.Windows.Forms.NumericUpDown();
             this.labelSignalDirection_A = new System.Windows.Forms.Label();
             this.labelSignalName_A = new System.Windows.Forms.Label();
@@ -57,6 +64,7 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonSerialSend = new System.Windows.Forms.Button();
             this.richTextBoxSerialData = new System.Windows.Forms.RichTextBox();
             this.labelSignalDirection_S = new System.Windows.Forms.Label();
             this.labelSignalName_S = new System.Windows.Forms.Label();
@@ -71,7 +79,10 @@
             this.checkBoxIncludeSignals = new System.Windows.Forms.CheckBox();
             this.richTextBoxPluginLog = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonExitGate = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonReloadPlugins = new System.Windows.Forms.Button();
+            this.buttonGlobalSettings = new System.Windows.Forms.Button();
             this.lvPlugins = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblPluginName = new System.Windows.Forms.Label();
@@ -83,17 +94,6 @@
             this.buttonPluginSettings = new System.Windows.Forms.Button();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.pbCrestronConnection = new System.Windows.Forms.PictureBox();
-            this.buttonExitGate = new System.Windows.Forms.Button();
-            this.buttonReloadPlugins = new System.Windows.Forms.Button();
-            this.buttonGlobalSettings = new System.Windows.Forms.Button();
-            this.buttonDig_Sw = new System.Windows.Forms.Button();
-            this.buttonPulse_Off = new System.Windows.Forms.Button();
-            this.buttonPulse_On = new System.Windows.Forms.Button();
-            this.buttonTO_OFF = new System.Windows.Forms.Button();
-            this.buttonTO_ON = new System.Windows.Forms.Button();
-            this.pictureBoxDigitlSignal = new System.Windows.Forms.PictureBox();
-            this.buttonAnalogSend = new System.Windows.Forms.Button();
-            this.buttonSerialSend = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +101,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitlSignal)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAnalogData)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -108,7 +109,6 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCrestronConnection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitlSignal)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,6 +146,82 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Digital";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // buttonDig_Sw
+            // 
+            this.buttonDig_Sw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDig_Sw.FlatAppearance.BorderSize = 0;
+            this.buttonDig_Sw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDig_Sw.Image = global::Balabolin.Crestron.Gate.Resource1.dig_sw;
+            this.buttonDig_Sw.Location = new System.Drawing.Point(961, 67);
+            this.buttonDig_Sw.Name = "buttonDig_Sw";
+            this.buttonDig_Sw.Size = new System.Drawing.Size(44, 30);
+            this.buttonDig_Sw.TabIndex = 21;
+            this.buttonDig_Sw.UseVisualStyleBackColor = true;
+            this.buttonDig_Sw.Click += new System.EventHandler(this.buttonDig_Sw_Click);
+            // 
+            // buttonPulse_Off
+            // 
+            this.buttonPulse_Off.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPulse_Off.FlatAppearance.BorderSize = 0;
+            this.buttonPulse_Off.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPulse_Off.Image = global::Balabolin.Crestron.Gate.Resource1.off_pulse;
+            this.buttonPulse_Off.Location = new System.Drawing.Point(911, 68);
+            this.buttonPulse_Off.Name = "buttonPulse_Off";
+            this.buttonPulse_Off.Size = new System.Drawing.Size(44, 30);
+            this.buttonPulse_Off.TabIndex = 20;
+            this.buttonPulse_Off.UseVisualStyleBackColor = true;
+            this.buttonPulse_Off.Click += new System.EventHandler(this.buttonPulse_Off_Click);
+            // 
+            // buttonPulse_On
+            // 
+            this.buttonPulse_On.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPulse_On.FlatAppearance.BorderSize = 0;
+            this.buttonPulse_On.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPulse_On.Image = global::Balabolin.Crestron.Gate.Resource1.on_pulse;
+            this.buttonPulse_On.Location = new System.Drawing.Point(861, 68);
+            this.buttonPulse_On.Name = "buttonPulse_On";
+            this.buttonPulse_On.Size = new System.Drawing.Size(44, 30);
+            this.buttonPulse_On.TabIndex = 19;
+            this.buttonPulse_On.UseVisualStyleBackColor = true;
+            this.buttonPulse_On.Click += new System.EventHandler(this.buttonPulse_On_Click);
+            // 
+            // buttonTO_OFF
+            // 
+            this.buttonTO_OFF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTO_OFF.FlatAppearance.BorderSize = 0;
+            this.buttonTO_OFF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonTO_OFF.Image = global::Balabolin.Crestron.Gate.Resource1.to_off;
+            this.buttonTO_OFF.Location = new System.Drawing.Point(811, 68);
+            this.buttonTO_OFF.Name = "buttonTO_OFF";
+            this.buttonTO_OFF.Size = new System.Drawing.Size(44, 30);
+            this.buttonTO_OFF.TabIndex = 18;
+            this.buttonTO_OFF.UseVisualStyleBackColor = true;
+            this.buttonTO_OFF.Click += new System.EventHandler(this.buttonTO_OFF_Click);
+            // 
+            // buttonTO_ON
+            // 
+            this.buttonTO_ON.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTO_ON.FlatAppearance.BorderSize = 0;
+            this.buttonTO_ON.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonTO_ON.Image = global::Balabolin.Crestron.Gate.Resource1.to_on;
+            this.buttonTO_ON.Location = new System.Drawing.Point(761, 68);
+            this.buttonTO_ON.Name = "buttonTO_ON";
+            this.buttonTO_ON.Size = new System.Drawing.Size(44, 30);
+            this.buttonTO_ON.TabIndex = 17;
+            this.buttonTO_ON.UseVisualStyleBackColor = true;
+            this.buttonTO_ON.Click += new System.EventHandler(this.buttonTO_ON_Click);
+            // 
+            // pictureBoxDigitlSignal
+            // 
+            this.pictureBoxDigitlSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxDigitlSignal.Image = global::Balabolin.Crestron.Gate.Resource1.D_Unknown;
+            this.pictureBoxDigitlSignal.Location = new System.Drawing.Point(717, 73);
+            this.pictureBoxDigitlSignal.Name = "pictureBoxDigitlSignal";
+            this.pictureBoxDigitlSignal.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxDigitlSignal.TabIndex = 16;
+            this.pictureBoxDigitlSignal.TabStop = false;
+            this.pictureBoxDigitlSignal.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // labelSignalDirection_D
             // 
@@ -239,6 +315,18 @@
             this.tabPage2.Text = "Analog";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // buttonAnalogSend
+            // 
+            this.buttonAnalogSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAnalogSend.FlatAppearance.BorderSize = 0;
+            this.buttonAnalogSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAnalogSend.Image = global::Balabolin.Crestron.Gate.Resource1.send;
+            this.buttonAnalogSend.Location = new System.Drawing.Point(844, 70);
+            this.buttonAnalogSend.Name = "buttonAnalogSend";
+            this.buttonAnalogSend.Size = new System.Drawing.Size(44, 30);
+            this.buttonAnalogSend.TabIndex = 21;
+            this.buttonAnalogSend.UseVisualStyleBackColor = true;
+            // 
             // numericUpDownAnalogData
             // 
             this.numericUpDownAnalogData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -300,6 +388,7 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4});
+            this.listViewAnalogs.FullRowSelect = true;
             listViewGroup3.Header = "Inputs";
             listViewGroup3.Name = "listViewGroupD_Input";
             listViewGroup4.Header = "Outputs";
@@ -345,6 +434,18 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Serial";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // buttonSerialSend
+            // 
+            this.buttonSerialSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSerialSend.FlatAppearance.BorderSize = 0;
+            this.buttonSerialSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSerialSend.Image = global::Balabolin.Crestron.Gate.Resource1.send;
+            this.buttonSerialSend.Location = new System.Drawing.Point(975, 75);
+            this.buttonSerialSend.Name = "buttonSerialSend";
+            this.buttonSerialSend.Size = new System.Drawing.Size(44, 30);
+            this.buttonSerialSend.TabIndex = 27;
+            this.buttonSerialSend.UseVisualStyleBackColor = true;
             // 
             // richTextBoxSerialData
             // 
@@ -507,6 +608,19 @@
             this.panel1.Size = new System.Drawing.Size(247, 601);
             this.panel1.TabIndex = 2;
             // 
+            // buttonExitGate
+            // 
+            this.buttonExitGate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonExitGate.FlatAppearance.BorderSize = 0;
+            this.buttonExitGate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExitGate.Image = global::Balabolin.Crestron.Gate.Resource1.Exit;
+            this.buttonExitGate.Location = new System.Drawing.Point(166, 552);
+            this.buttonExitGate.Name = "buttonExitGate";
+            this.buttonExitGate.Size = new System.Drawing.Size(80, 46);
+            this.buttonExitGate.TabIndex = 14;
+            this.buttonExitGate.UseVisualStyleBackColor = true;
+            this.buttonExitGate.Click += new System.EventHandler(this.buttonExitGate_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -517,6 +631,32 @@
             this.label1.Size = new System.Drawing.Size(168, 30);
             this.label1.TabIndex = 13;
             this.label1.Text = "Installed plugins";
+            // 
+            // buttonReloadPlugins
+            // 
+            this.buttonReloadPlugins.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonReloadPlugins.FlatAppearance.BorderSize = 0;
+            this.buttonReloadPlugins.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonReloadPlugins.Image = global::Balabolin.Crestron.Gate.Resource1.Reload;
+            this.buttonReloadPlugins.Location = new System.Drawing.Point(1, 552);
+            this.buttonReloadPlugins.Name = "buttonReloadPlugins";
+            this.buttonReloadPlugins.Size = new System.Drawing.Size(80, 46);
+            this.buttonReloadPlugins.TabIndex = 2;
+            this.buttonReloadPlugins.UseVisualStyleBackColor = true;
+            this.buttonReloadPlugins.Click += new System.EventHandler(this.buttonReloadPlugins_Click);
+            // 
+            // buttonGlobalSettings
+            // 
+            this.buttonGlobalSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonGlobalSettings.FlatAppearance.BorderSize = 0;
+            this.buttonGlobalSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGlobalSettings.Image = global::Balabolin.Crestron.Gate.Resource1.cfg;
+            this.buttonGlobalSettings.Location = new System.Drawing.Point(82, 552);
+            this.buttonGlobalSettings.Name = "buttonGlobalSettings";
+            this.buttonGlobalSettings.Size = new System.Drawing.Size(80, 46);
+            this.buttonGlobalSettings.TabIndex = 1;
+            this.buttonGlobalSettings.UseVisualStyleBackColor = true;
+            this.buttonGlobalSettings.Click += new System.EventHandler(this.buttonGlobalSettings_Click);
             // 
             // lvPlugins
             // 
@@ -650,145 +790,6 @@
             this.pbCrestronConnection.TabIndex = 4;
             this.pbCrestronConnection.TabStop = false;
             // 
-            // buttonExitGate
-            // 
-            this.buttonExitGate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonExitGate.FlatAppearance.BorderSize = 0;
-            this.buttonExitGate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExitGate.Image = global::Balabolin.Crestron.Gate.Resource1.Exit;
-            this.buttonExitGate.Location = new System.Drawing.Point(166, 552);
-            this.buttonExitGate.Name = "buttonExitGate";
-            this.buttonExitGate.Size = new System.Drawing.Size(80, 46);
-            this.buttonExitGate.TabIndex = 14;
-            this.buttonExitGate.UseVisualStyleBackColor = true;
-            this.buttonExitGate.Click += new System.EventHandler(this.buttonExitGate_Click);
-            // 
-            // buttonReloadPlugins
-            // 
-            this.buttonReloadPlugins.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonReloadPlugins.FlatAppearance.BorderSize = 0;
-            this.buttonReloadPlugins.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonReloadPlugins.Image = global::Balabolin.Crestron.Gate.Resource1.Reload;
-            this.buttonReloadPlugins.Location = new System.Drawing.Point(1, 552);
-            this.buttonReloadPlugins.Name = "buttonReloadPlugins";
-            this.buttonReloadPlugins.Size = new System.Drawing.Size(80, 46);
-            this.buttonReloadPlugins.TabIndex = 2;
-            this.buttonReloadPlugins.UseVisualStyleBackColor = true;
-            this.buttonReloadPlugins.Click += new System.EventHandler(this.buttonReloadPlugins_Click);
-            // 
-            // buttonGlobalSettings
-            // 
-            this.buttonGlobalSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonGlobalSettings.FlatAppearance.BorderSize = 0;
-            this.buttonGlobalSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonGlobalSettings.Image = global::Balabolin.Crestron.Gate.Resource1.cfg;
-            this.buttonGlobalSettings.Location = new System.Drawing.Point(82, 552);
-            this.buttonGlobalSettings.Name = "buttonGlobalSettings";
-            this.buttonGlobalSettings.Size = new System.Drawing.Size(80, 46);
-            this.buttonGlobalSettings.TabIndex = 1;
-            this.buttonGlobalSettings.UseVisualStyleBackColor = true;
-            this.buttonGlobalSettings.Click += new System.EventHandler(this.buttonGlobalSettings_Click);
-            // 
-            // buttonDig_Sw
-            // 
-            this.buttonDig_Sw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDig_Sw.FlatAppearance.BorderSize = 0;
-            this.buttonDig_Sw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDig_Sw.Image = global::Balabolin.Crestron.Gate.Resource1.dig_sw;
-            this.buttonDig_Sw.Location = new System.Drawing.Point(961, 67);
-            this.buttonDig_Sw.Name = "buttonDig_Sw";
-            this.buttonDig_Sw.Size = new System.Drawing.Size(44, 30);
-            this.buttonDig_Sw.TabIndex = 21;
-            this.buttonDig_Sw.UseVisualStyleBackColor = true;
-            this.buttonDig_Sw.Click += new System.EventHandler(this.buttonDig_Sw_Click);
-            // 
-            // buttonPulse_Off
-            // 
-            this.buttonPulse_Off.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPulse_Off.FlatAppearance.BorderSize = 0;
-            this.buttonPulse_Off.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPulse_Off.Image = global::Balabolin.Crestron.Gate.Resource1.off_pulse;
-            this.buttonPulse_Off.Location = new System.Drawing.Point(911, 68);
-            this.buttonPulse_Off.Name = "buttonPulse_Off";
-            this.buttonPulse_Off.Size = new System.Drawing.Size(44, 30);
-            this.buttonPulse_Off.TabIndex = 20;
-            this.buttonPulse_Off.UseVisualStyleBackColor = true;
-            this.buttonPulse_Off.Click += new System.EventHandler(this.buttonPulse_Off_Click);
-            // 
-            // buttonPulse_On
-            // 
-            this.buttonPulse_On.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPulse_On.FlatAppearance.BorderSize = 0;
-            this.buttonPulse_On.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPulse_On.Image = global::Balabolin.Crestron.Gate.Resource1.on_pulse;
-            this.buttonPulse_On.Location = new System.Drawing.Point(861, 68);
-            this.buttonPulse_On.Name = "buttonPulse_On";
-            this.buttonPulse_On.Size = new System.Drawing.Size(44, 30);
-            this.buttonPulse_On.TabIndex = 19;
-            this.buttonPulse_On.UseVisualStyleBackColor = true;
-            this.buttonPulse_On.Click += new System.EventHandler(this.buttonPulse_On_Click);
-            // 
-            // buttonTO_OFF
-            // 
-            this.buttonTO_OFF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTO_OFF.FlatAppearance.BorderSize = 0;
-            this.buttonTO_OFF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonTO_OFF.Image = global::Balabolin.Crestron.Gate.Resource1.to_off;
-            this.buttonTO_OFF.Location = new System.Drawing.Point(811, 68);
-            this.buttonTO_OFF.Name = "buttonTO_OFF";
-            this.buttonTO_OFF.Size = new System.Drawing.Size(44, 30);
-            this.buttonTO_OFF.TabIndex = 18;
-            this.buttonTO_OFF.UseVisualStyleBackColor = true;
-            this.buttonTO_OFF.Click += new System.EventHandler(this.buttonTO_OFF_Click);
-            // 
-            // buttonTO_ON
-            // 
-            this.buttonTO_ON.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTO_ON.FlatAppearance.BorderSize = 0;
-            this.buttonTO_ON.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonTO_ON.Image = global::Balabolin.Crestron.Gate.Resource1.to_on;
-            this.buttonTO_ON.Location = new System.Drawing.Point(761, 68);
-            this.buttonTO_ON.Name = "buttonTO_ON";
-            this.buttonTO_ON.Size = new System.Drawing.Size(44, 30);
-            this.buttonTO_ON.TabIndex = 17;
-            this.buttonTO_ON.UseVisualStyleBackColor = true;
-            this.buttonTO_ON.Click += new System.EventHandler(this.buttonTO_ON_Click);
-            // 
-            // pictureBoxDigitlSignal
-            // 
-            this.pictureBoxDigitlSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxDigitlSignal.Image = global::Balabolin.Crestron.Gate.Resource1.D_Unknown;
-            this.pictureBoxDigitlSignal.Location = new System.Drawing.Point(717, 73);
-            this.pictureBoxDigitlSignal.Name = "pictureBoxDigitlSignal";
-            this.pictureBoxDigitlSignal.Size = new System.Drawing.Size(24, 24);
-            this.pictureBoxDigitlSignal.TabIndex = 16;
-            this.pictureBoxDigitlSignal.TabStop = false;
-            this.pictureBoxDigitlSignal.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // buttonAnalogSend
-            // 
-            this.buttonAnalogSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAnalogSend.FlatAppearance.BorderSize = 0;
-            this.buttonAnalogSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAnalogSend.Image = global::Balabolin.Crestron.Gate.Resource1.send;
-            this.buttonAnalogSend.Location = new System.Drawing.Point(844, 70);
-            this.buttonAnalogSend.Name = "buttonAnalogSend";
-            this.buttonAnalogSend.Size = new System.Drawing.Size(44, 30);
-            this.buttonAnalogSend.TabIndex = 21;
-            this.buttonAnalogSend.UseVisualStyleBackColor = true;
-            // 
-            // buttonSerialSend
-            // 
-            this.buttonSerialSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSerialSend.FlatAppearance.BorderSize = 0;
-            this.buttonSerialSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSerialSend.Image = global::Balabolin.Crestron.Gate.Resource1.send;
-            this.buttonSerialSend.Location = new System.Drawing.Point(975, 75);
-            this.buttonSerialSend.Name = "buttonSerialSend";
-            this.buttonSerialSend.Size = new System.Drawing.Size(44, 30);
-            this.buttonSerialSend.TabIndex = 27;
-            this.buttonSerialSend.UseVisualStyleBackColor = true;
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
@@ -851,6 +852,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitlSignal)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAnalogData)).EndInit();
@@ -862,7 +864,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCrestronConnection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitlSignal)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

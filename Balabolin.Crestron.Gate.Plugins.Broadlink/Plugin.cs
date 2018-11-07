@@ -11,6 +11,7 @@ using Balabolin.Crestron.Gate;
 using Balabolin.Utils;
 using SharpBroadlink.Devices;
 
+
 namespace Balabolin.Crestron.Gate.Plugins.Broadlink
 {
     public class Plugin : IPlugin
