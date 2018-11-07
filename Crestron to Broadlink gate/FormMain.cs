@@ -336,12 +336,12 @@ namespace Balabolin.Crestron.Gates.BroadlinkGate
         {
             if (gs.CrestronIP!="")
             {
-                cipClient = new CIPClient(gs.CrestronIP, (byte)Convert.ToInt32(gs.CrestronPID, 16));
+                cipClient = new CIPClient();
                 cipClient.OnСonnect += OnConnect;
                 cipClient.OnDisconnect += OnDisconnect;
                 cipClient.Debug += On_Crestron_Debug;
                 cipClient.OnDigital += CipClient_OnDigital;
-                cipClient.ConnectToServer();
+                cipClient.ConnectToServer(gs.CrestronIP, (byte)Convert.ToInt32(gs.CrestronPID, 16));
             }
         }
 
@@ -394,7 +394,7 @@ namespace Balabolin.Crestron.Gates.BroadlinkGate
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            InitData();
+            //InitData();
         }
 
         private void button2_Click(object sender, EventArgs e)

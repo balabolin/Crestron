@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Inputs", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Outputs", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Inputs", System.Windows.Forms.HorizontalAlignment.Left);
@@ -65,6 +66,10 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.checkBoxInternl = new System.Windows.Forms.CheckBox();
+            this.checkBoxCrestron = new System.Windows.Forms.CheckBox();
+            this.checkBoxIncludeSignals = new System.Windows.Forms.CheckBox();
+            this.richTextBoxPluginLog = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.lvPlugins = new System.Windows.Forms.ListView();
@@ -75,10 +80,10 @@
             this.comboBoxPID = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lblPID = new System.Windows.Forms.Label();
-            this.richTextBoxPluginLog = new System.Windows.Forms.RichTextBox();
             this.buttonPluginSettings = new System.Windows.Forms.Button();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.pbCrestronConnection = new System.Windows.Forms.PictureBox();
+            this.buttonExitGate = new System.Windows.Forms.Button();
             this.buttonReloadPlugins = new System.Windows.Forms.Button();
             this.buttonGlobalSettings = new System.Windows.Forms.Button();
             this.buttonDig_Sw = new System.Windows.Forms.Button();
@@ -89,7 +94,11 @@
             this.pictureBoxDigitlSignal = new System.Windows.Forms.PictureBox();
             this.buttonAnalogSend = new System.Windows.Forms.Button();
             this.buttonSerialSend = new System.Windows.Forms.Button();
-            this.checkBoxIncludeSignals = new System.Windows.Forms.CheckBox();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -100,6 +109,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCrestronConnection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitlSignal)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -422,6 +432,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.checkBoxInternl);
+            this.tabPage4.Controls.Add(this.checkBoxCrestron);
             this.tabPage4.Controls.Add(this.checkBoxIncludeSignals);
             this.tabPage4.Controls.Add(this.richTextBoxPluginLog);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -431,11 +443,61 @@
             this.tabPage4.Text = "Log";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // checkBoxInternl
+            // 
+            this.checkBoxInternl.AutoSize = true;
+            this.checkBoxInternl.Checked = true;
+            this.checkBoxInternl.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxInternl.Location = new System.Drawing.Point(210, 11);
+            this.checkBoxInternl.Name = "checkBoxInternl";
+            this.checkBoxInternl.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxInternl.TabIndex = 27;
+            this.checkBoxInternl.Text = "Plugin";
+            this.checkBoxInternl.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCrestron
+            // 
+            this.checkBoxCrestron.AutoSize = true;
+            this.checkBoxCrestron.Checked = true;
+            this.checkBoxCrestron.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCrestron.Location = new System.Drawing.Point(108, 11);
+            this.checkBoxCrestron.Name = "checkBoxCrestron";
+            this.checkBoxCrestron.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxCrestron.TabIndex = 26;
+            this.checkBoxCrestron.Text = "Crestron";
+            this.checkBoxCrestron.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxIncludeSignals
+            // 
+            this.checkBoxIncludeSignals.AutoSize = true;
+            this.checkBoxIncludeSignals.Checked = true;
+            this.checkBoxIncludeSignals.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxIncludeSignals.Location = new System.Drawing.Point(11, 11);
+            this.checkBoxIncludeSignals.Name = "checkBoxIncludeSignals";
+            this.checkBoxIncludeSignals.Size = new System.Drawing.Size(60, 17);
+            this.checkBoxIncludeSignals.TabIndex = 25;
+            this.checkBoxIncludeSignals.Text = "Signals";
+            this.checkBoxIncludeSignals.UseVisualStyleBackColor = true;
+            this.checkBoxIncludeSignals.CheckedChanged += new System.EventHandler(this.checkBoxIncludeSignals_CheckedChanged);
+            // 
+            // richTextBoxPluginLog
+            // 
+            this.richTextBoxPluginLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxPluginLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBoxPluginLog.Location = new System.Drawing.Point(11, 34);
+            this.richTextBoxPluginLog.Name = "richTextBoxPluginLog";
+            this.richTextBoxPluginLog.Size = new System.Drawing.Size(1000, 440);
+            this.richTextBoxPluginLog.TabIndex = 24;
+            this.richTextBoxPluginLog.Text = "";
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel1.Controls.Add(this.buttonExitGate);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.buttonReloadPlugins);
             this.panel1.Controls.Add(this.buttonGlobalSettings);
@@ -556,18 +618,6 @@
             this.lblPID.Text = "0x12";
             this.lblPID.Visible = false;
             // 
-            // richTextBoxPluginLog
-            // 
-            this.richTextBoxPluginLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBoxPluginLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBoxPluginLog.Location = new System.Drawing.Point(11, 34);
-            this.richTextBoxPluginLog.Name = "richTextBoxPluginLog";
-            this.richTextBoxPluginLog.Size = new System.Drawing.Size(1000, 440);
-            this.richTextBoxPluginLog.TabIndex = 24;
-            this.richTextBoxPluginLog.Text = "";
-            // 
             // buttonPluginSettings
             // 
             this.buttonPluginSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -600,15 +650,28 @@
             this.pbCrestronConnection.TabIndex = 4;
             this.pbCrestronConnection.TabStop = false;
             // 
+            // buttonExitGate
+            // 
+            this.buttonExitGate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonExitGate.FlatAppearance.BorderSize = 0;
+            this.buttonExitGate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExitGate.Image = global::Balabolin.Crestron.Gate.Resource1.Exit;
+            this.buttonExitGate.Location = new System.Drawing.Point(166, 552);
+            this.buttonExitGate.Name = "buttonExitGate";
+            this.buttonExitGate.Size = new System.Drawing.Size(80, 46);
+            this.buttonExitGate.TabIndex = 14;
+            this.buttonExitGate.UseVisualStyleBackColor = true;
+            this.buttonExitGate.Click += new System.EventHandler(this.buttonExitGate_Click);
+            // 
             // buttonReloadPlugins
             // 
             this.buttonReloadPlugins.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonReloadPlugins.FlatAppearance.BorderSize = 0;
             this.buttonReloadPlugins.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReloadPlugins.Image = global::Balabolin.Crestron.Gate.Resource1.Reload;
-            this.buttonReloadPlugins.Location = new System.Drawing.Point(3, 552);
+            this.buttonReloadPlugins.Location = new System.Drawing.Point(1, 552);
             this.buttonReloadPlugins.Name = "buttonReloadPlugins";
-            this.buttonReloadPlugins.Size = new System.Drawing.Size(116, 46);
+            this.buttonReloadPlugins.Size = new System.Drawing.Size(80, 46);
             this.buttonReloadPlugins.TabIndex = 2;
             this.buttonReloadPlugins.UseVisualStyleBackColor = true;
             this.buttonReloadPlugins.Click += new System.EventHandler(this.buttonReloadPlugins_Click);
@@ -619,9 +682,9 @@
             this.buttonGlobalSettings.FlatAppearance.BorderSize = 0;
             this.buttonGlobalSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGlobalSettings.Image = global::Balabolin.Crestron.Gate.Resource1.cfg;
-            this.buttonGlobalSettings.Location = new System.Drawing.Point(125, 552);
+            this.buttonGlobalSettings.Location = new System.Drawing.Point(82, 552);
             this.buttonGlobalSettings.Name = "buttonGlobalSettings";
-            this.buttonGlobalSettings.Size = new System.Drawing.Size(116, 46);
+            this.buttonGlobalSettings.Size = new System.Drawing.Size(80, 46);
             this.buttonGlobalSettings.TabIndex = 1;
             this.buttonGlobalSettings.UseVisualStyleBackColor = true;
             this.buttonGlobalSettings.Click += new System.EventHandler(this.buttonGlobalSettings_Click);
@@ -726,18 +789,42 @@
             this.buttonSerialSend.TabIndex = 27;
             this.buttonSerialSend.UseVisualStyleBackColor = true;
             // 
-            // checkBoxIncludeSignals
+            // notifyIcon1
             // 
-            this.checkBoxIncludeSignals.AutoSize = true;
-            this.checkBoxIncludeSignals.Checked = true;
-            this.checkBoxIncludeSignals.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxIncludeSignals.Location = new System.Drawing.Point(11, 11);
-            this.checkBoxIncludeSignals.Name = "checkBoxIncludeSignals";
-            this.checkBoxIncludeSignals.Size = new System.Drawing.Size(96, 17);
-            this.checkBoxIncludeSignals.TabIndex = 25;
-            this.checkBoxIncludeSignals.Text = "Include signals";
-            this.checkBoxIncludeSignals.UseVisualStyleBackColor = true;
-            this.checkBoxIncludeSignals.CheckedChanged += new System.EventHandler(this.checkBoxIncludeSignals_CheckedChanged);
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Crestron to broadlink gate";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(100, 54);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.showToolStripMenuItem.Text = "Hide";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(96, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -759,6 +846,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Crestron gate";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -775,6 +863,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCrestronConnection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDigitlSignal)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -834,6 +923,14 @@
         private System.Windows.Forms.Button buttonPulse_On;
         private System.Windows.Forms.RichTextBox richTextBoxPluginLog;
         private System.Windows.Forms.CheckBox checkBoxIncludeSignals;
+        private System.Windows.Forms.CheckBox checkBoxInternl;
+        private System.Windows.Forms.CheckBox checkBoxCrestron;
+        private System.Windows.Forms.Button buttonExitGate;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

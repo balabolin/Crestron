@@ -50,6 +50,13 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.fggToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bfgbgfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bfToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabIRCodes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIRCodes)).BeginInit();
@@ -57,6 +64,7 @@
             this.tabConfig.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -68,10 +76,10 @@
             this.tabControl1.Controls.Add(this.tabIRCodes);
             this.tabControl1.Controls.Add(this.tabLog);
             this.tabControl1.Controls.Add(this.tabConfig);
-            this.tabControl1.Location = new System.Drawing.Point(0, 34);
+            this.tabControl1.Location = new System.Drawing.Point(0, 290);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1445, 498);
+            this.tabControl1.Size = new System.Drawing.Size(1445, 242);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.Deselected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Deselected);
             // 
@@ -85,7 +93,7 @@
             this.tabIRCodes.Location = new System.Drawing.Point(4, 4);
             this.tabIRCodes.Name = "tabIRCodes";
             this.tabIRCodes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabIRCodes.Size = new System.Drawing.Size(1437, 472);
+            this.tabIRCodes.Size = new System.Drawing.Size(1437, 216);
             this.tabIRCodes.TabIndex = 0;
             this.tabIRCodes.Text = "IR codes";
             this.tabIRCodes.UseVisualStyleBackColor = true;
@@ -146,7 +154,7 @@
             this.dgvIRCodes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvIRCodes.Location = new System.Drawing.Point(8, 6);
             this.dgvIRCodes.Name = "dgvIRCodes";
-            this.dgvIRCodes.Size = new System.Drawing.Size(1271, 460);
+            this.dgvIRCodes.Size = new System.Drawing.Size(1271, 204);
             this.dgvIRCodes.TabIndex = 0;
             this.dgvIRCodes.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvIRCodes_CellValueChanged);
             this.dgvIRCodes.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvIRCodes_RowPrePaint);
@@ -256,7 +264,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(44, 12);
+            this.label1.Location = new System.Drawing.Point(94, 238);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(116, 13);
             this.label1.TabIndex = 7;
@@ -267,17 +275,76 @@
             // 
             this.pictureBox1.Image = global::Balabolin.Crestron.Gates.BroadlinkGate.Resource1.Crestron_disconnected_png;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(10, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(60, 228);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButton1,
+            this.toolStripSeparator1,
+            this.toolStripButton1});
+            this.toolStrip1.Location = new System.Drawing.Point(148, 68);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(190, 47);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.AutoSize = false;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fggToolStripMenuItem,
+            this.bfgbgfgToolStripMenuItem,
+            this.bfToolStripMenuItem});
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(149, 44);
+            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            // 
+            // fggToolStripMenuItem
+            // 
+            this.fggToolStripMenuItem.Name = "fggToolStripMenuItem";
+            this.fggToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fggToolStripMenuItem.Text = "fgg";
+            // 
+            // bfgbgfgToolStripMenuItem
+            // 
+            this.bfgbgfgToolStripMenuItem.Name = "bfgbgfgToolStripMenuItem";
+            this.bfgbgfgToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bfgbgfgToolStripMenuItem.Text = "bfgbgfg";
+            // 
+            // bfToolStripMenuItem
+            // 
+            this.bfToolStripMenuItem.Name = "bfToolStripMenuItem";
+            this.bfToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bfToolStripMenuItem.Text = "bf";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 533);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tabControl1);
@@ -296,6 +363,8 @@
             this.tabConfig.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,6 +392,13 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripMenuItem fggToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bfgbgfgToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bfToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 

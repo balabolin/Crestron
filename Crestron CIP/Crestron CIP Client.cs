@@ -53,7 +53,7 @@ namespace Balabolin.Crestron
             }
         }
 
-        private Cancellation​Token​Source tokenSource = new CancellationTokenSource();
+        private Cancellation​Token​Source tokenSource;
         private CancellationToken cancelToken;
 
         public async void ConnectToServer(string sIP, byte bPID)
@@ -64,7 +64,8 @@ namespace Balabolin.Crestron
             try
             {
                 client = new TcpClient();
-                await client.ConnectAsync(IP, PORT_CIP);
+                tokenSource = new CancellationTokenSource();
+                await client.ConnectAsync(IP, PORT_CIP);                
                 nstream = client.GetStream();
                 cancelToken = tokenSource.Token;
                 ts = Task.Run(BeginRead,cancelToken);                
@@ -80,10 +81,11 @@ namespace Balabolin.Crestron
         private void FreeResources()
         {
             StopHeartBeatTimer();
+            client.Client.Shutdown(SocketShutdown.Both);
             tokenSource.Cancel();
             //ts?.Dispose();
-            nstream?.Dispose();
-            client?.Close();
+            //nstream?.Dispose();
+            //client?.Close();
         }
         public void DisconnectFromServer()
         {
@@ -160,8 +162,9 @@ namespace Balabolin.Crestron
         {
             try
             {
-                while (true)
+                while (!cancelToken.IsCancellationRequested)
                 {
+                    //OnDebug(eDebugEventType.Info, "wait for data"); 
                     byte[] baBuf = await ReadFromStreamAsync(nstream, 3);
                     byte bCMD = baBuf[0];
                     int iLen = (baBuf[1] << 8) + baBuf[2];
@@ -169,6 +172,9 @@ namespace Balabolin.Crestron
                     string sPayload = StringHelper.GetString(baPayload);
                     ProcessCIPCommand(bCMD, iLen, sPayload);
                 }
+                OnDebug(eDebugEventType.Info, "wait for close");
+                client.Close();
+                OnDebug(eDebugEventType.Info, "closed");
             }
             catch (Exception e)
             {

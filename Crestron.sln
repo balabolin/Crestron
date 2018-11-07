@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MQTT", "MQTT", "{A69F9459-C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balabolin.Crestron.Gate.Plugins.MQTT", "Balabolin.Crestron.Gate.Plugins.MQTT\Balabolin.Crestron.Gate.Plugins.MQTT.csproj", "{8CF32ABF-C624-4CBA-B222-721D98FF45E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balabolin.Crestron.Gates.Broadlink", "Crestron to Broadlink gate\Balabolin.Crestron.Gates.Broadlink.csproj", "{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{8CF32ABF-C624-4CBA-B222-721D98FF45E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CF32ABF-C624-4CBA-B222-721D98FF45E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CF32ABF-C624-4CBA-B222-721D98FF45E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F34F4E-7FE4-4BC7-8BF2-7A97091601EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

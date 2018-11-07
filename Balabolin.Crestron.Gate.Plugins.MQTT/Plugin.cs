@@ -46,7 +46,7 @@ namespace Balabolin.Crestron.Gate.Plugins.MQTT
         public event DigitalEventHandler OnDigital;
         public event AnalogueEventHandler OnAnalog;
         public event SerialEventHandler OnSerial;
-        public event EventHandler<StringEventArgs> OnDebug;
+        public event EventHandler<StringEventArgs> OnDebugEvent;
 
         public void ProcessAnaloglEvent(int iJoin, int Data)
         {

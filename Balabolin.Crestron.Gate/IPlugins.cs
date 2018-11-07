@@ -26,7 +26,7 @@ namespace Balabolin.Crestron.Gate.Plugins
         event AnalogueEventHandler OnAnalog;
         event SerialEventHandler OnSerial;
 
-        event EventHandler<StringEventArgs> OnDebug;
+        event EventHandler<StringEventArgs> OnDebugEvent;
 
         void ShowMainWindow();
 

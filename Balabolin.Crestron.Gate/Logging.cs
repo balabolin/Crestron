@@ -60,18 +60,26 @@ namespace Balabolin.Crestron.Gate.Plugins
 
     }
 
+    public enum LogItemType
+    {
+        Internal,
+        Crestron
+    }
+
     public class PluginLogItem:LogItem
     {
         public string Text { get; }
 
-        public PluginLogItem(string text):base()
+        public LogItemType ItemType { get; }
+        public PluginLogItem(LogItemType logItemType, string text):base()
         {
+            ItemType = logItemType;
             Text = text;
         }
 
         public override string ToLongLogString()
         {
-            return String.Format("{0} {1}", RaisedDateTime.ToString(), Text);
+            return String.Format("{0} [{1}] {2}", RaisedDateTime.ToString(),ItemType == LogItemType.Crestron ? "Crestron" : "Plugin", Text);
         }
     }
 

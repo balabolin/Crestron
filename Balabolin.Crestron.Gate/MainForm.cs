@@ -196,9 +196,9 @@ namespace Balabolin.Crestron.Gate
             {
                 SetSubitemData(signal);
             }
-            if (toLog)
+            if (toLog && checkBoxIncludeSignals.Checked)
             {
-                AppendLog(richTextBoxPluginLog, signal.Log.Last().ToShortLogString());
+                AppendLog(richTextBoxPluginLog, signal.Log.Last().ToLongLogString());
             }
 
         }
@@ -269,7 +269,9 @@ namespace Balabolin.Crestron.Gate
             if (rtb.InvokeRequired)
                 rtb.BeginInvoke(new RichTextBoxDelegate(AppendLog), rtb, s);
             else
-                rtb.Text = s + "\n" + rtb.Text;
+            {
+                rtb.Text = s + "\n" + (rtb.Text.Length<=100000 ? rtb.Text : rtb.Text.Substring(0,100000));
+            }
         }
 
         private void LoadSignalLog(RichTextBox rtb, Signal sig)
@@ -511,6 +513,73 @@ namespace Balabolin.Crestron.Gate
         private void checkBoxIncludeSignals_CheckedChanged(object sender, EventArgs e)
         {
             LoadPluginLog(SelectedPlugin);
+        }
+
+        #region Hide/Show
+
+        bool realExit = false;
+        private void ForceExit()
+        {
+            realExit = true;
+            this.Close();
+        }
+
+        private void HideMainForm()
+        {
+            Hide();
+            showToolStripMenuItem.Text = "Show";
+        }
+
+        private void ShowMainForm()
+        {
+            this.Show();
+            WindowState = FormWindowState.Normal;
+            showToolStripMenuItem.Text = "Hide";
+        }
+
+        private void SwitchFormVisible()
+        {
+            if (showToolStripMenuItem.Text == "Hide")
+            {
+                HideMainForm();
+            }
+            else
+            {
+                ShowMainForm();
+            }
+        }
+
+        #endregion
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = !realExit;
+            if (!realExit) HideMainForm();
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            SwitchFormVisible();
+        }
+
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwitchFormVisible();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ForceExit();
+        }
+
+        private void buttonExitGate_Click(object sender, EventArgs e)
+        {
+            ForceExit();
         }
     }
 }

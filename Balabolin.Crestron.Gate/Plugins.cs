@@ -91,12 +91,12 @@ namespace Balabolin.Crestron.Gate.Plugins
 
         public void OnDebug(object sender, StringEventArgs e)
         {
-            WriteToLog(e.val);
+            WriteToLog(sender is CIPClient ? LogItemType.Crestron : LogItemType.Internal, e.val);
         }
 
-        private void WriteToLog(string s)
+        private void WriteToLog(LogItemType lit, string s)
         {
-            PluginLogItem pli = new PluginLogItem(s);
+            PluginLogItem pli = new PluginLogItem(lit,s);
             PluginLog.Add(pli);
             OmPluginDebugEvent?.Invoke(this, pli.ToLongLogString());
         }
@@ -109,7 +109,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
             else
             {
-                WriteToLog(String.Format("Invalid digital join ({0}) received", usJoin.ToString()));
+                WriteToLog(LogItemType.Internal, String.Format("Invalid digital join ({0}) received", usJoin.ToString()));
             }
         }
 
@@ -121,7 +121,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
             else
             {
-                WriteToLog(String.Format("Invalid analog join ({0}) received", usJoin.ToString()));
+                WriteToLog(LogItemType.Internal, String.Format("Invalid analog join ({0}) received", usJoin.ToString()));
             }
         }
 
@@ -133,7 +133,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
             else
             {
-                WriteToLog(String.Format("Invalid serial join ({0}) received", usJoin.ToString()));
+                WriteToLog(LogItemType.Internal, String.Format("Invalid serial join ({0}) received", usJoin.ToString()));
             }
         }
 
@@ -142,6 +142,26 @@ namespace Balabolin.Crestron.Gate.Plugins
         #region Load/unload functions
         private void LoadDefinitions()
         {
+            foreach (Signal signal in InDigitals)
+                signal.OnDataChange -= SignalDataChange;
+            foreach (Signal signal in InAnalogs)
+                signal.OnDataChange -= SignalDataChange;
+            foreach (Signal signal in InSerials)
+                signal.OnDataChange -= SignalDataChange;
+            foreach (Signal signal in OutDigitals)
+                signal.OnDataChange -= SignalDataChange;
+            foreach (Signal signal in OutAnalogs)
+                signal.OnDataChange -= SignalDataChange;
+            foreach (Signal signal in OutSerials)
+                signal.OnDataChange -= SignalDataChange;
+
+            InDigitals.Clear();
+            InAnalogs.Clear();
+            InSerials.Clear();
+            OutAnalogs.Clear();
+            OutDigitals.Clear();
+            OutSerials.Clear();
+
             ushort i = 1;
             if (_plugin.InDigitals != null)
             {
@@ -216,16 +236,23 @@ namespace Balabolin.Crestron.Gate.Plugins
 
             if (pluginAss != null)
             {
-                foreach (var type in pluginAss.GetTypes())
+                try
                 {
-                    var i = type.GetInterface("IPlugin");
-                    if (i != null)
+                    foreach (var type in pluginAss.GetTypes())
                     {
-                        _plugin = (IPlugin)pluginAss.CreateInstance(type.FullName);
-                        _AssemblyDateTime = File.GetLastWriteTime(AssemblyFileName);
-                        LoadDefinitions();
-                        _plugin.Start();
+                        var i = type.GetInterface("IPlugin");
+                        if (i != null)
+                        {
+                            _plugin = (IPlugin)pluginAss.CreateInstance(type.FullName);
+                            _plugin.OnDebugEvent += OnDebug;
+                            _AssemblyDateTime = File.GetLastWriteTime(AssemblyFileName);
+                            LoadDefinitions();
+                            _plugin.Start();
+                        }
                     }
+                }
+                catch
+                {
                 }
             }
         }
@@ -291,6 +318,7 @@ namespace Balabolin.Crestron.Gate.Plugins
         public void ShowPluginWindow()
         {
             _plugin.ShowMainWindow();
+            LoadDefinitions();
         }
 
         public Plugin(string assemblyFileName, PluginManager manager)
@@ -312,6 +340,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             Crestron.OnAnalogue += OnAnalogEventHandler;
             Crestron.OnSerial += OnSerialEventHandler;
             Crestron.Debug += OnDebug;
+            //Debu
         }
     }
 

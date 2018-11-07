@@ -156,5 +156,8 @@
   <ItemGroup>
     <None Include="IMG\dig_sw.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="IMG\Exit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
