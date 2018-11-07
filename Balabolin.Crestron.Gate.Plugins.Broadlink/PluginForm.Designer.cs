@@ -33,13 +33,15 @@
             this.tabPageIR = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonSendIR = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dgvIRCodes = new System.Windows.Forms.DataGridView();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.btnRescan = new System.Windows.Forms.Button();
             this.btnPairing = new System.Windows.Forms.Button();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.comboBoxVia = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageIR.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIRCodes)).BeginInit();
@@ -58,9 +60,11 @@
             // 
             // tabPageIR
             // 
+            this.tabPageIR.Controls.Add(this.label1);
+            this.tabPageIR.Controls.Add(this.comboBoxVia);
             this.tabPageIR.Controls.Add(this.button3);
             this.tabPageIR.Controls.Add(this.button4);
-            this.tabPageIR.Controls.Add(this.button2);
+            this.tabPageIR.Controls.Add(this.buttonSendIR);
             this.tabPageIR.Controls.Add(this.button1);
             this.tabPageIR.Controls.Add(this.dgvIRCodes);
             this.tabPageIR.Location = new System.Drawing.Point(4, 22);
@@ -70,13 +74,14 @@
             this.tabPageIR.TabIndex = 0;
             this.tabPageIR.Text = "IR signal definitions";
             this.tabPageIR.UseVisualStyleBackColor = true;
+            this.tabPageIR.Click += new System.EventHandler(this.tabPageIR_Click);
             // 
             // button3
             // 
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Image = global::Balabolin.Crestron.Gate.Plugins.Broadlink.Resource1.move_down;
-            this.button3.Location = new System.Drawing.Point(275, 12);
+            this.button3.Location = new System.Drawing.Point(471, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(57, 44);
             this.button3.TabIndex = 16;
@@ -87,23 +92,23 @@
             this.button4.FlatAppearance.BorderSize = 0;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Image = global::Balabolin.Crestron.Gate.Plugins.Broadlink.Resource1.move_up;
-            this.button4.Location = new System.Drawing.Point(212, 12);
+            this.button4.Location = new System.Drawing.Point(408, 12);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(57, 44);
             this.button4.TabIndex = 15;
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // buttonSendIR
             // 
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Image = global::Balabolin.Crestron.Gate.Plugins.Broadlink.Resource1.ir_send;
-            this.button2.Location = new System.Drawing.Point(70, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(57, 44);
-            this.button2.TabIndex = 14;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonSendIR.FlatAppearance.BorderSize = 0;
+            this.buttonSendIR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSendIR.Image = global::Balabolin.Crestron.Gate.Plugins.Broadlink.Resource1.ir_send;
+            this.buttonSendIR.Location = new System.Drawing.Point(70, 12);
+            this.buttonSendIR.Name = "buttonSendIR";
+            this.buttonSendIR.Size = new System.Drawing.Size(57, 44);
+            this.buttonSendIR.TabIndex = 14;
+            this.buttonSendIR.UseVisualStyleBackColor = true;
+            this.buttonSendIR.Click += new System.EventHandler(this.buttonSendIR_Click);
             // 
             // button1
             // 
@@ -161,6 +166,7 @@
             this.btnPairing.Size = new System.Drawing.Size(57, 44);
             this.btnPairing.TabIndex = 11;
             this.btnPairing.UseVisualStyleBackColor = true;
+            this.btnPairing.Click += new System.EventHandler(this.btnPairing_Click);
             // 
             // propertyGrid1
             // 
@@ -171,6 +177,25 @@
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.Size = new System.Drawing.Size(1188, 489);
             this.propertyGrid1.TabIndex = 10;
+            // 
+            // comboBoxVia
+            // 
+            this.comboBoxVia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxVia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxVia.FormattingEnabled = true;
+            this.comboBoxVia.Location = new System.Drawing.Point(238, 25);
+            this.comboBoxVia.Name = "comboBoxVia";
+            this.comboBoxVia.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxVia.TabIndex = 17;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(142, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Send/receive via";
             // 
             // PluginForm
             // 
@@ -184,6 +209,7 @@
             this.Load += new System.EventHandler(this.PluginForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPageIR.ResumeLayout(false);
+            this.tabPageIR.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIRCodes)).EndInit();
             this.tabPageSettings.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -201,7 +227,9 @@
         private System.Windows.Forms.DataGridView dgvIRCodes;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonSendIR;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBoxVia;
     }
 }

@@ -65,7 +65,7 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
             if (Data)
             {
                 IRCode irc = PluginSettings.IRCodes[iJoin - 1];
-                SendSignalAsync(irc);
+                SendSignalAsync(irc,irc.Blaster);
             }
         }
 
@@ -208,10 +208,10 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
                 }
             }
         }
-        public  async void LearnIRCodeAsync(IRCode irCode)
+        public  async void LearnIRCodeAsync(IRCode irCode,string BlasterName)
         {
-            Rm RMBlaster = GetRMBlasterByName(irCode.Blaster);
-            WLog("Enter learning mode on {0}", irCode.Blaster);
+            Rm RMBlaster = GetRMBlasterByName(BlasterName);
+            WLog("Enter learning mode on {0}", BlasterName);
             var x = await RMBlaster.Auth();
             if (x)
             {
@@ -229,22 +229,22 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
                 }
                 else
                 {
-                    WLog("! Blaster [{0}] not respond", irCode.Blaster);
+                    WLog("! Blaster [{0}] not respond", BlasterName);
                 }
             }
             else
             {
-                WLog("! Blaster [{0}] not respond", irCode.Blaster);
+                WLog("! Blaster [{0}] not respond", BlasterName);
             }
         }
 
 
-        public async void SendSignalAsync(IRCode iRCode)
+        public async void SendSignalAsync(IRCode iRCode, string BlasterName)
         {
             if (iRCode.Command!=null && iRCode.Command != "")
             {
-                Rm RMBlaster = GetRMBlasterByName(iRCode.Blaster);
-                WLog("Send {0} via {1}", iRCode.Name, iRCode.Blaster);
+                Rm RMBlaster = GetRMBlasterByName(BlasterName);
+                WLog("Send {0} via {1}", iRCode.Name, BlasterName);
                 var x = await RMBlaster.Auth();
                 if (x)
                 {
@@ -255,10 +255,10 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
                         WLog("OK");
                     }
                     else
-                    { WLog("! Blaster [{0}] not respond", iRCode.Blaster); }
+                    { WLog("! Blaster [{0}] not respond", BlasterName); }
                 }
                 else
-                { WLog("! Blaster [{0}] not respond", iRCode.Blaster); }
+                { WLog("! Blaster [{0}] not respond", BlasterName); }
             }
         }
 

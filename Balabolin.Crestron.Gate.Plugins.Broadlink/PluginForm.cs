@@ -29,11 +29,7 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
                     plugin.PluginSettings.Blasters.Add(newBI);
                 }
             }
-            /*
-            IRCodes.AllowNew = true;
-            IRCodes.AllowEdit = true;
-            IRCodes.AllowRemove = true;
-            */
+                        
             dgvIRCodes.Columns.Clear();
             dgvIRCodes.AutoGenerateColumns = false;
 
@@ -64,10 +60,15 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
             dgvIRCodes.Columns.Add(dgvc3);
 
             //Dictionary<BlasterInfo, string> dctBlasters = new Dictionary<BlasterInfo, string>();
+            comboBoxVia.Items.Clear();
+            comboBoxVia.Items.Add("<join blaster>");
+            comboBoxVia.SelectedIndex = 0;
+
             List<string> lib = new List<string>();
             foreach (BlasterInfo bi in plugin.PluginSettings.Blasters)
             {
                 lib.Add(bi.ToString());
+                comboBoxVia.Items.Add(bi.Name);
             }
 
             DataGridViewComboBoxColumn dgvc4 = new DataGridViewComboBoxColumn();
@@ -89,9 +90,8 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
             var irCode = ((IRCode)dgvIRCodes.CurrentRow.DataBoundItem);
             if (irCode != null)
             {
-                plugin.LearnIRCodeAsync(irCode);
-
-
+                string BlasterName = comboBoxVia.SelectedIndex == 0 ? irCode.Blaster : comboBoxVia.Text ;
+                plugin.LearnIRCodeAsync(irCode,BlasterName);
                 dgvIRCodes.Refresh();
             }
         }
@@ -101,8 +101,8 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
             var irCode = ((IRCode)dgvIRCodes.CurrentRow.DataBoundItem);
             if (irCode != null)
             {
-                plugin.SendSignalAsync(irCode);
-                dgvIRCodes.Refresh();
+                string BlasterName = comboBoxVia.SelectedIndex == 0 ? irCode.Blaster : comboBoxVia.Text;
+                plugin.SendSignalAsync(irCode, BlasterName);
             }
         }
 
@@ -131,9 +131,19 @@ namespace Balabolin.Crestron.Gate.Plugins.Broadlink
                    (e.RowIndex + 1).ToString();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void tabPageIR_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonSendIR_Click(object sender, EventArgs e)
+        {
+            SendIRAsync();
+        }
+
+        private void btnPairing_Click(object sender, EventArgs e)
+        {
+            SharpBroadlink.Broadlink.Setup(plugin.PluginSettings.SSID, plugin.PluginSettings.Passphrase, SharpBroadlink.Broadlink.WifiSecurityMode.WPA2);
         }
     }
 }
