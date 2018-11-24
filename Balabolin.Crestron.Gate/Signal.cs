@@ -51,29 +51,29 @@ namespace Balabolin.Crestron.Gate.Plugins
 
         #endregion
         private void ProcessDataChange()
-        {
-            switch (SignalType)
-            {
-                case SignalTypeEnum.Analog:
-                    if (SignalDirection == SignalDirectionEnum.Input)
-                        Plug.ProcessAnaloglEvent(Join, (int)Data);
-                    else
-                        Plug.Crestron?.SendAnalogue(Join, (ushort)Data);
-                    break;
-                case SignalTypeEnum.Digital:
-                    if (SignalDirection == SignalDirectionEnum.Input)
-                        Plug.ProcessDigitalEvent(Join, (bool)Data);
-                    else
-                        Plug.Crestron?.SendDigital(Join, (bool)Data);
-                    break;
-                case SignalTypeEnum.Serial:
-                    if (SignalDirection == SignalDirectionEnum.Input)
-                        Plug.ProcessSerialEvent(Join, Data.ToString());
-                    else
-                        Plug.Crestron?.SendSerial(Join, Data.ToString());
-                    break;
-            }
-        }
+        {                        
+                switch (SignalType)
+                {
+                    case SignalTypeEnum.Analog:
+                        if (SignalDirection == SignalDirectionEnum.Input)
+                            Plug.ProcessAnaloglEvent(Join, (int)Data);
+                        else
+                            if (Plug.Crestron != null && Plug.Crestron.Connected) Plug.Crestron?.SendAnalogue(Join, (ushort)Data);
+                        break;
+                    case SignalTypeEnum.Digital:
+                        if (SignalDirection == SignalDirectionEnum.Input)
+                            Plug.ProcessDigitalEvent(Join, (bool)Data);
+                        else
+                            if (Plug.Crestron != null && Plug.Crestron.Connected) Plug.Crestron?.SendDigital(Join, (bool)Data);
+                        break;
+                    case SignalTypeEnum.Serial:
+                        if (SignalDirection == SignalDirectionEnum.Input)
+                            Plug.ProcessSerialEvent(Join, Data.ToString());
+                        else
+                            if (Plug.Crestron != null && Plug.Crestron.Connected) Plug.Crestron?.SendSerial(Join, Data.ToString());
+                        break;
+                }
+            }        
         private void SetData(object value, SignalChangeType changeType)
         {
             data = value;

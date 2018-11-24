@@ -47,6 +47,7 @@ namespace Balabolin.Crestron.Gate
             {
                 if (SelectedPlugin.ConnectedToCrestron)
                 {
+                    SelectedPlugin.AutoReconnect = false;
                     SelectedPlugin.DisconnectFromCrestron();
                 }
                 else
@@ -57,6 +58,7 @@ namespace Balabolin.Crestron.Gate
                         lblPID.Text = comboBoxPID.Text;
                     }
                     SelectedPlugin.ConnectToCrestron();
+                    SelectedPlugin.AutoReconnect = true;
                 }
             }
         }

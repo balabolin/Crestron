@@ -41,6 +41,24 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
         }
 
+        private bool _autoreconnect = false;
+        public bool AutoReconnect {
+            get {
+                return _autoreconnect;
+            }
+            set
+            {
+                if (value)
+                {
+                    if (!ConnectedToCrestron && HexPID!="") StartReconnectTimer();
+                } else
+                {
+                    StopReconnectTimer();
+                }
+                _autoreconnect = value;
+            }
+          }
+
         public CIPClient Crestron;
 
         public List<PluginLogItem> PluginLog = new List<PluginLogItem>();
@@ -87,6 +105,7 @@ namespace Balabolin.Crestron.Gate.Plugins
         public void OnCrestronDisonnect()
         {
             OnPluginDisconnectedFromCrestron?.Invoke(this);
+            if (AutoReconnect) StartReconnectTimer();
         }
 
         public void OnDebug(object sender, StringEventArgs e)
@@ -143,7 +162,7 @@ namespace Balabolin.Crestron.Gate.Plugins
         #region Crestron event handlers
         public void OnPluginDigitalEventHandler(ushort usJoin, bool bValue)
         {
-            if (usJoin <= InDigitals.Count)
+            if (usJoin <= OutDigitals.Count)
             {
                 OutDigitals[usJoin - 1].SystemSetData(bValue);
             }
@@ -155,7 +174,7 @@ namespace Balabolin.Crestron.Gate.Plugins
 
         public void OnPluginAnalogEventHandler(ushort usJoin, ushort usValue)
         {
-            if (usJoin <= InAnalogs.Count)
+            if (usJoin <= OutAnalogs.Count)
             {
                 OutAnalogs[usJoin - 1].SystemSetData(usValue);
             }
@@ -167,7 +186,7 @@ namespace Balabolin.Crestron.Gate.Plugins
 
         public void OnPluginSerialEventHandler(ushort usJoin, string sValue)
         {
-            if (usJoin <= InSerials.Count)
+            if (usJoin <= OutSerials.Count)
             {
                 OutSerials[usJoin - 1].SystemSetData(sValue);
             }
@@ -356,6 +375,33 @@ namespace Balabolin.Crestron.Gate.Plugins
 
         #endregion
 
+        #region Reconnect logic
+        private System.Threading.Timer timer;
+        private System.Threading.AutoResetEvent timerEvent = new System.Threading.AutoResetEvent(false);
+
+
+        private void OnReconnectTimer(Object stateInfo)
+        {
+            if (!ConnectedToCrestron)
+            {
+                ConnectToCrestron();
+            }
+            else
+            {
+                StopReconnectTimer();
+            }
+        }
+
+        private void StartReconnectTimer()
+        {
+            timer = new System.Threading.Timer(OnReconnectTimer, timerEvent, 0, 5000);
+        }
+        private void StopReconnectTimer()
+        {
+            timer?.Dispose();
+        }
+
+        #endregion
 
         public void ShowPluginWindow()
         {
@@ -445,6 +491,7 @@ namespace Balabolin.Crestron.Gate.Plugins
                     plugin.HexPID = ps.PID;
                     if (ps.PID != "")
                     {
+                        plugin.AutoReconnect = true;
                         plugin.ConnectToCrestron();
                     } 
                 }
@@ -505,6 +552,5 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
         }
         #endregion
-
     }
 }

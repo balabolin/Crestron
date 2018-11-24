@@ -49,7 +49,14 @@ namespace Balabolin.Crestron
         {
             get
             {
-                return (client == null) ? false : client.Connected; 
+                try
+                {
+                    return (client == null) ? false : client.Connected;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
 
@@ -80,9 +87,16 @@ namespace Balabolin.Crestron
         }
         private void FreeResources()
         {
-            StopHeartBeatTimer();
-            client.Client.Shutdown(SocketShutdown.Both);
-            tokenSource.Cancel();
+            try
+            {
+                StopHeartBeatTimer();
+                client.Client.Shutdown(SocketShutdown.Both);
+                tokenSource.Cancel();
+            }
+            catch
+            {
+
+            }
             //ts?.Dispose();
             //nstream?.Dispose();
             //client?.Close();
