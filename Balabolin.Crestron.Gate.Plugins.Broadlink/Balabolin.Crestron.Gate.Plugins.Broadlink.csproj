@@ -111,6 +111,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Users\Oleg\Documents\GITHUB\Home\Crestron\Balabolin.Crestron.Gate\bin\Debug\Plugins" /y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetPath)" "D:\Documents.cloud\GITHUB\Home\Crestron\Balabolin.Crestron.Gate\bin\Debug\Plugins" /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

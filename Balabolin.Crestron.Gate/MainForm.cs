@@ -47,6 +47,7 @@ namespace Balabolin.Crestron.Gate
             {
                 if (SelectedPlugin.ConnectedToCrestron)
                 {
+                    SelectedPlugin.AutoReconnect = false;
                     SelectedPlugin.DisconnectFromCrestron();
                 }
                 else
@@ -57,6 +58,7 @@ namespace Balabolin.Crestron.Gate
                         lblPID.Text = comboBoxPID.Text;
                     }
                     SelectedPlugin.ConnectToCrestron();
+                    SelectedPlugin.AutoReconnect = true;
                 }
             }
         }
@@ -408,7 +410,7 @@ namespace Balabolin.Crestron.Gate
                 SelectedPlugin.OnSignalDataChange -= OnSignalDataEvent;
                 SelectedPlugin.OnPluginConnectedToCrestron -= OnCrestronConnected;
                 SelectedPlugin.OnPluginDisconnectedFromCrestron -= OnCrestronDisconnected;
-                SelectedPlugin.OmPluginDebugEvent -= OnPluginDebug;
+                SelectedPlugin.OnPluginDebugEvent -= OnPluginDebug;
             }
 
             SetActiveDigital(null);
@@ -428,7 +430,7 @@ namespace Balabolin.Crestron.Gate
             SelectedPlugin.OnSignalDataChange += OnSignalDataEvent;
             SelectedPlugin.OnPluginConnectedToCrestron += OnCrestronConnected;
             SelectedPlugin.OnPluginDisconnectedFromCrestron += OnCrestronDisconnected;
-            SelectedPlugin.OmPluginDebugEvent += OnPluginDebug;
+            SelectedPlugin.OnPluginDebugEvent += OnPluginDebug;
         }
 
         private void SetConnectionState()
