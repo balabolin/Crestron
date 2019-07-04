@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Balabolin.Crestron;
-using Balabolin.Utils;
+using Crestron.ActiveCNX;
+//using Balabolin.Utils;
 
 namespace Balabolin.Crestron.Gate.Plugins
 {
@@ -59,7 +60,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
           }
 
-        public CIPClient Crestron;
+        public ActiveCNX Crestron;
 
         public List<PluginLogItem> PluginLog = new List<PluginLogItem>();
 

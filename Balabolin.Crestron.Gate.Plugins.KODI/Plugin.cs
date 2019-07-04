@@ -427,13 +427,18 @@ namespace Balabolin.Crestron.Gate.Plugins.KODI
 
         #region KODI Logic
 
+        private string lastTotalTime = "";
+        private string lastContentType = "";
         private void SetPlayerProps(JToken result)
         {
             string t = result["type"].Value<string>();
-            if (t == "video") OnAnalog?.Invoke(2, 2);
-            else if (t == "audio") OnAnalog?.Invoke(2, 1);
-            else if (t == "picture") OnAnalog?.Invoke(2, 4);
-
+            if (lastContentType != t)
+            {
+                lastContentType = t;
+                if (t == "video") OnAnalog?.Invoke(2, 2);
+                else if (t == "audio") OnAnalog?.Invoke(2, 1);
+                else if (t == "picture") OnAnalog?.Invoke(2, 4);
+            }
             int speed = result["speed"].Value<int>();
 
             var jTime = result["time"].Value<JObject>();
@@ -451,7 +456,11 @@ namespace Balabolin.Crestron.Gate.Plugins.KODI
             OnAnalog?.Invoke(3, (ushort)percentage);
 
             OnSerial?.Invoke(4, time);
-            OnSerial?.Invoke(5, totalTime);
+            if (lastTotalTime != totalTime)
+            {
+                lastTotalTime = totalTime;
+                OnSerial?.Invoke(5, totalTime);
+            }
         }
 
 
@@ -465,6 +474,8 @@ namespace Balabolin.Crestron.Gate.Plugins.KODI
             OnAnalog?.Invoke(1, 0);
             OnAnalog?.Invoke(2, 0);
             OnAnalog?.Invoke(3, 0);
+            lastContentType = "";
+            lastTotalTime = "";
         }
 
         private void SetMediaInfo(JObject info)
@@ -565,7 +576,7 @@ namespace Balabolin.Crestron.Gate.Plugins.KODI
 
         #region Playing timer
         private System.Threading.Timer timer;
-        private System.Threading.AutoResetEvent timerEvent = new System.Threading.AutoResetEvent(false)s;
+        private System.Threading.AutoResetEvent timerEvent = new System.Threading.AutoResetEvent(false);
 
         private void StartPlayTimer()
         {

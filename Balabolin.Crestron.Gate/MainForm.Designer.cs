@@ -728,7 +728,19 @@
             this.comboBoxPID.FormattingEnabled = true;
             this.comboBoxPID.Items.AddRange(new object[] {
             "0x12",
-            "0x13"});
+            "0x13",
+            "0x14",
+            "0x15",
+            "0x16",
+            "0x17",
+            "0x18",
+            "0x19",
+            "0x1A",
+            "0x1B",
+            "0x1C",
+            "0x1D",
+            "0x1E",
+            "0x1F"});
             this.comboBoxPID.Location = new System.Drawing.Point(734, 17);
             this.comboBoxPID.MaxDropDownItems = 32;
             this.comboBoxPID.Name = "comboBoxPID";
