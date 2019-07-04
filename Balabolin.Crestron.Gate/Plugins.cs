@@ -42,23 +42,7 @@ namespace Balabolin.Crestron.Gate.Plugins
             }
         }
 
-        private bool _autoreconnect = false;
-        public bool AutoReconnect {
-            get {
-                return _autoreconnect;
-            }
-            set
-            {
-                if (value)
-                {
-                    if (!ConnectedToCrestron && HexPID!="") StartReconnectTimer();
-                } else
-                {
-                    StopReconnectTimer();
-                }
-                _autoreconnect = value;
-            }
-          }
+        public CIPClient Crestron;
 
         public ActiveCNX Crestron;
 
@@ -376,10 +360,6 @@ namespace Balabolin.Crestron.Gate.Plugins
         }
 
         #endregion
-
-        #region Reconnect logic
-        private System.Threading.Timer timer;
-        private System.Threading.AutoResetEvent timerEvent = new System.Threading.AutoResetEvent(false);
 
 
         private void OnReconnectTimer(Object stateInfo)
